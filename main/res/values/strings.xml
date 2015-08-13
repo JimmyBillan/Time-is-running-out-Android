@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">Tiro</string>
+
+    <string name="signIn_title">Tiro</string>
+    <string name="signIn_hint_mail">My Mail</string>
+    <string name="signIn_hint_username">My Username</string>
+    <string name="signIn_hint_password"> My Password ( 8 )</string>
+    <string name="signIn_rb_male">Male</string>
+    <string name="signIn_rb_female">Female</string>
+    <string name="signIn_button_signUp"> SIGN UP !</string>
+
+    <string name="signIn_error_mail_invalid">Mail Invalid</string>
+    <string name="signIn_error_mail_used">Mail already use</string>
+
+    <string name="signIn_error_username_used">Username already use</string>
+    <string name="signIn_error_username_tooShort">(length [4 ... 15])</string>
+    <string name="signIn_error_username_notValid">Only :aZ,0-9,\'_\',\'-\'</string>
+
+    <string name="signIn_error_password_short">(length min : 8)</string>
+    <string name="signIn_TextView_Age">Minimum age : 13 </string>
+    <string name="signIn_TextView_Age_old">You are too old sorry </string>
+
+    <string name="signIn_hint_birth_year">My age</string>
+    <string name="signIn_error_sex">Please check : </string>
+
+    <string name="no_wifi_or_mobile">No wireless or mobile connection.</string>
+
+    <string name="hint_mail">Mail</string>
+
+    <string name="log_in_LinkToSignIn">Create an account !</string>
+    <string name="log_in_LinkToforgot_password">Forgot your password ?</string>
+
+
+    <string name="forgotPassword_button_sendLink">Reset Password !</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_log_in_">LogIn_A</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_forgot_password_">ForgotPassword_A</string>
+
+    <color name="blueActionBar">#673AB7</color>
+    <color name="bluePolice">#7E57C2</color>
+    <color name="blue_textview">#512DA8</color>
+    <color name="bluebackgroundLight">#EDE7F6</color>
+    <color name="textWhiteActionBar">#FFFFFF</color>
+    <color name="error_red">#DD2C00</color>
+    
+    <color name="refresh_swiper_color_1">#7E57C2</color>
+    <color name="refresh_swiper_color_2">#673AB7</color>
+    <color name="refresh_swiper_color_3">#512DA8</color>
+
+    
+    <string name="title_activity_time_line">TimeLine</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_timeline_">Timeline_A</string>
+    <string name="title_activity_profile_">profile_A</string>
+    <string name="title_activity_user_profil_">User_profil_A</string>
+
+
+    <string name="tab_case_0">All</string>
+    <string name="tab_case_1">My status</string>
+    <string name="tab_case_2">Messages</string>
+    <string name="title_activity_edit_post_">Edit_post_A</string>
+    <string name="Activity_title_Edit_post">Edit</string>
+    <string name="A_Edit_Post_totalAccount">Your account :\u0020</string>
+    <string name="A_Edit_Post_Toast_Raw_Data_Empty">The post is empty</string>
+
+    <string name="title_activity_search_contact">Add contact</string>
+    <string name="followers">Followers</string>
+    <string name="title_activity_list_following">Following</string>
+    <string name="title_activity_take_pics_">TakePics_A</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

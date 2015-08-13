@@ -1,0 +1,157 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:background="@color/bluebackgroundLight"
+    tools:context="tiroapp.com.tiro_app.activity.Edit_post_A">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/textWhiteActionBar"
+        >
+
+        <EditText
+            android:id="@+id/A_Edit_Post_tv_rawData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:height="84dp"
+            android:background="@color/textWhiteActionBar"
+            android:gravity="top|left"
+            android:hint="Your message"
+            android:padding="8dp" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/textWhiteActionBar"
+        >
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
+                android:textColor="@color/blue_textview"
+                android:text="Minutes :"/>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/A_Edit_Post_seekBarMinutes"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
+                android:textColor="@color/blue_textview"
+                android:layout_gravity="center"
+                android:paddingRight="8dp"
+                android:text="Hours :"
+                android:textStyle="bold"/>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/A_Edit_Post_seekBarHours"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
+                android:textColor="@color/blue_textview"
+                android:layout_gravity="center"
+                android:paddingRight="8dp"
+                android:text="Days :"
+                android:textStyle="bold"/>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/A_Edit_Post_seekBarDays"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        >
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="@dimen/abc_text_size_title_material"
+            android:textStyle="bold"
+            android:textColor="@color/blue_textview"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_toLeftOf="@+id/A_Edit_Post_timerTotal"
+            android:text="@string/A_Edit_Post_totalAccount" />
+
+        <TextView
+            android:id="@+id/A_Edit_Post_timerTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="@dimen/abc_text_size_title_material"
+            android:textStyle="bold"
+            android:textColor="@color/blue_textview"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:text=" 0H00" />
+
+    </RelativeLayout >
+
+
+
+
+</LinearLayout>

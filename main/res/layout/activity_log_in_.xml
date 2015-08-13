@@ -1,0 +1,139 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="tiroapp.com.tiro_app.activity.LogIn_A"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:focusable="false"
+    android:focusableInTouchMode="true"
+    android:background="@color/bluebackgroundLight"
+    >
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:layout_marginTop="0dp"
+        android:isScrollContainer="false"
+        android:id="@+id/scrollView"
+        android:clickable="true">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0">
+
+            <TextView
+                android:id="@+id/signIn_title"
+
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/signIn_title"
+                android:textSize="100sp"
+                android:textStyle="bold"
+                android:textColor="@color/bluePolice"
+                android:gravity="center_horizontal"
+                android:paddingTop="20sp"
+                android:paddingBottom="25sp" />
+
+            <TextView
+                android:id="@+id/error_mail"
+                android:textColor="@color/error_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/mail"
+                style="@style/App_EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="@string/hint_mail"
+                android:padding="15dp"
+                android:inputType="textEmailAddress"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textIsSelectable="false"/>
+
+            <TextView
+                android:id="@+id/error_password"
+                android:textColor="@color/error_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/App_EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="@string/signIn_hint_password"
+                android:inputType="textPassword"
+                android:padding="15dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textIsSelectable="false"/>
+            <TextView
+                android:id="@+id/forgot_password"
+                android:textColor="@color/blue_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginTop="5dp"
+                android:textSize="20sp"
+                android:text="@string/log_in_LinkToforgot_password"
+                android:onClick="go_to_forgotPassword_A"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="35dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:background="#FFFFFF"
+                android:textColor="@color/bluePolice"
+                android:text="@string/signIn_button_signUp"
+                android:id="@+id/signup"
+                android:onClick="submitForm" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15sp"
+                android:paddingBottom="25sp"
+                android:textColor="@color/blue_textview"
+                android:clickable="true"
+                android:gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/log_in_LinkToSignIn"
+                android:id="@+id/go_to_signin"
+                android:onClick="go_to_Signin_A"
+                />
+
+
+        </TableLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

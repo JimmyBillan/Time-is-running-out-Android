@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+
+    tools:context="tiroapp.com.tiro_app.activity.SearchContact_A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/textWhiteActionBar"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/A_Search_Contact_inputSearch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:inputType="textPersonName"
+                android:background="@color/textWhiteActionBar"
+                android:hint="Enter username"
+                android:imeOptions="actionSend"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp" />
+
+            <Button
+                android:id="@+id/A_Search_Contact_btnSearch"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_action_search_blue"
+                android:paddingRight="16dp"
+                android:src="@drawable/ic_action_search_blue"
+                android:text="Search"
+                android:textColor="@color/blue_textview" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/A_Search_Contact_RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

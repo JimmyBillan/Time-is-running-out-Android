@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="1dp"
+    android:background="@color/textWhiteActionBar"
+    android:minHeight="72dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp">
+
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/Cptl_image_username"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:maxHeight="60dp"
+        android:maxWidth="60dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+
+
+        android:src="@drawable/ic_account_circle_white_48dp" />
+
+    <TextView
+        android:id="@+id/Cptl_textview_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/Cptl_image_username"
+        android:text="Username"
+        android:textColor="@color/blue_textview"
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Cptl_textview_timeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/Cptl_image_username"
+        android:alpha="0.87"
+        android:layout_below="@+id/Cptl_textview_username"
+        android:text="54min left"
+        android:textColor="@color/blueActionBar"
+        android:textSize="@dimen/abc_text_size_subtitle_material_toolbar" />
+
+    <Button
+        android:id="@+id/Cptl_btn_edit_post"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_action_editor_mode_blue" />
+
+    <TextView
+        android:id="@+id/Cptl_textview_rawData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Cptl_image_username"
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:paddingTop="8dp"
+        android:textColor="@android:color/black"
+        android:text="text text Le messageLe message text Le messageLe message text Le messageLe message text Le messageLe message text Le message" />
+
+    <Button
+        android:id="@+id/Cptl_btn_add_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/ic_action_communication_comment_blueaction"
+        android:text="Comment"
+        android:textStyle="bold"
+        android:textColor="@color/blueActionBar"
+        android:alpha="0.70"
+        android:layout_marginLeft="-5dp"
+        android:layout_below="@+id/Cptl_textview_rawData" />
+
+
+    <Button
+        android:id="@+id/Cptl_btn_tiroplus_1h"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="+1h"
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:textColor="@color/blueActionBar"
+        android:alpha="0.70"
+        android:layout_below="@+id/Cptl_textview_rawData"
+        android:layout_toRightOf="@+id/Cptl_btn_add_comment"
+        android:layout_toEndOf="@+id/Cptl_btn_add_comment"
+        android:layout_marginLeft="32dp" />
+    <Button
+        android:id="@+id/Cptl_btn_tiroplus_10m"
+        android:layout_width="45dp"
+        android:text="+10m"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:layout_toRightOf="@+id/Cptl_btn_tiroplus_1h"
+        android:textColor="@color/blueActionBar"
+        android:alpha="0.70"
+        android:layout_alignTop="@+id/Cptl_btn_tiroplus_1h"
+        android:layout_marginLeft="32dp" />
+
+
+</RelativeLayout>

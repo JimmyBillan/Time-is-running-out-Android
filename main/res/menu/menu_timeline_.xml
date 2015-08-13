@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="tiroapp.com.tiro_app.activity.Timeline_A">
+
+    <item
+        android:id="@+id/icon_search"
+        android:icon="@drawable/ic_search_white_48dp"
+        android:showAsAction="always" />
+    <item
+        android:id="@+id/icon_add_post"
+        android:icon="@drawable/ic_add_circle_outline_white_48dp"
+        android:showAsAction="always" />
+
+    <item
+        android:id="@+id/icon_my_profil"
+        android:icon="@drawable/ic_account_circle_white_48dp"
+        android:showAsAction="always"/>
+</menu>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/textWhiteActionBar"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+
+            <ImageView
+                android:id="@+id/f_profil_image_imageView"
+                android:layout_width="110dp"
+                android:layout_height="110dp"/>
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/f_profil_image_NImageView"
+                android:maxWidth="110dp"
+                android:maxHeight="110dp"
+                android:scaleType="centerCrop"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/f_profil_linearlayout_vertical_username"
+                android:layout_toRightOf="@+id/f_profil_image_NImageView">
+
+                <TextView
+                    android:id="@+id/f_profil_textview_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="Username"
+                    android:textColor="@color/blue_textview"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/f_profil_textview_upload_profil_pics"
+                android:padding="4dp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/blueActionBar"
+                android:layout_height="wrap_content"
+                android:text="Edit picture"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_below="@+id/f_profil_image_NImageView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/f_profil_image_NImageView"
+                android:layout_alignEnd="@+id/f_profil_image_NImageView"
+                android:gravity="center_horizontal" />
+
+            <Button
+                android:id="@+id/F_profil_btn_disconnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="right|bottom"
+                android:paddingRight="16dp"
+                android:text="Settings"
+                android:layout_alignBaseline="@+id/f_profil_textview_upload_profil_pics"
+                android:layout_alignBottom="@+id/f_profil_textview_upload_profil_pics"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/F_profil_big_btn_following"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/blueActionBar">
+        <TextView
+            android:id="@+id/f_profil_textview_following"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Following"
+            android:textStyle="bold"
+            android:textColor="@color/textWhiteActionBar"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textSize="30sp"
+            android:paddingLeft="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/f_profil_textview_nbWaiting"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textStyle="bold"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textSize="30sp"
+                android:textColor="@color/textWhiteActionBar"
+                android:text="0"
+                android:layout_marginLeft="21dp"
+                android:layout_marginStart="21dp"
+                android:layout_alignBaseline="@+id/f_profil_textview_following"
+                android:layout_alignBottom="@+id/f_profil_textview_following"
+                android:layout_toRightOf="@+id/f_profil_textview_following"
+                android:layout_toEndOf="@+id/f_profil_textview_following"
+                android:gravity="center_vertical" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

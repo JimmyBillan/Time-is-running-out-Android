@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/main_activity_item_search"
+        android:icon="@drawable/ic_person_add_white_24dp"
+        android:title="Add contact"
+        android:visible="true"
+        app:showAsAction="always"
+        />
+
+
+    <item
+        android:id="@+id/main_activity_item_timerTotal"
+        android:title=""
+        android:visible="true"
+        app:showAsAction="always|withText"/>
+
+</menu>
