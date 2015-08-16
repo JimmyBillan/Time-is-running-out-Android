@@ -159,7 +159,7 @@
                     android:textStyle="bold"
                     android:text="@string/signIn_rb_male"
                     android:onClick="hideKeyboard"
-                    android:textColor="#006064" />
+                    android:textColor="@color/bluePolice" />
                 <RadioButton
                     android:id="@+id/radioF"
 
@@ -171,7 +171,7 @@
                     android:textStyle="bold"
                     android:text="@string/signIn_rb_female"
                     android:onClick="hideKeyboard"
-                    android:textColor="#006064" />
+                    android:textColor="@color/bluePolice" />
             </RadioGroup>
 
 
@@ -191,7 +191,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:background="#FFFFFF"
-                    android:textColor="#006064"
+                    android:textColor="@color/bluePolice"
                     android:text="@string/signIn_button_signUp"
                     android:id="@+id/signup"
                     android:onClick="submitForm"

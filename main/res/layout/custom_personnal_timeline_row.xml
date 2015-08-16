@@ -7,9 +7,15 @@
     android:minHeight="72dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:id="@+id/Cptl_rlt_layout"
     android:paddingTop="8dp">
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/textWhiteActionBar"
+        android:id="@+id/Cptl_rlt_layout_showing"
+        >
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/Cptl_image_username"
         android:layout_width="60dp"
@@ -49,10 +55,15 @@
 
     <Button
         android:id="@+id/Cptl_btn_edit_post"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="70dp"
+        android:layout_height="16dp"
+        android:text="edit"
+        android:textStyle="bold"
+        android:textColor="@color/bluePolice"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ic_action_editor_mode_blue" />
+        android:background="@android:color/transparent"
+        android:drawableRight="@drawable/ic_image_edit_deep_purp"
+        android:alpha="0.77"/>
 
     <TextView
         android:id="@+id/Cptl_textview_rawData"
@@ -69,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_action_communication_comment_blueaction"
+        android:drawableLeft="@drawable/ic_communication_comment_deep_purp"
         android:text="Comment"
         android:textStyle="bold"
         android:textColor="@color/blueActionBar"
@@ -105,6 +116,38 @@
         android:alpha="0.70"
         android:layout_alignTop="@+id/Cptl_btn_tiroplus_1h"
         android:layout_marginLeft="32dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/textWhiteActionBar"
+        android:id="@+id/Cptl_rlt_layout_hide"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="This post is dead "
+            android:id="@+id/textView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton3"
+            android:src="@drawable/abc_ic_clear_mtrl_alpha"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+
 
 
 </RelativeLayout>

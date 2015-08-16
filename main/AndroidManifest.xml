@@ -29,6 +29,9 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/CustomTheme" >
 
+        <service android:name=".HorlogeService"
+            android:exported="false"/>
+
         <!-- Main activity log in -->
         <activity
             android:name="tiroapp.com.tiro_app.activity.LogIn_A"

@@ -112,7 +112,7 @@
                 android:textSize="20sp"
                 android:background="#FFFFFF"
                 android:textColor="@color/bluePolice"
-                android:text="@string/signIn_button_signUp"
+                android:text="@string/signIn_button_Log_in"
                 android:id="@+id/signup"
                 android:onClick="submitForm" />
 

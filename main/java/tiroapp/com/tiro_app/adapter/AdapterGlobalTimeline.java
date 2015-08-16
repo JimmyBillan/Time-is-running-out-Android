@@ -2,6 +2,7 @@ package tiroapp.com.tiro_app.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,13 @@ import tiroapp.com.tiro_app.ApplicationController;
 import tiroapp.com.tiro_app.R;
 import tiroapp.com.tiro_app.controller.Horloge;
 import tiroapp.com.tiro_app.controller.RowsGlobalTimeline;
-import tiroapp.com.tiro_app.controller.RowsPersonnalTimeline;
 
 /**
  * Created by user on 06/08/2015.
  */
 public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTimeline.ViewHolder> {
+
+    private AgtInterface agtInterface;
 
     List<RowsGlobalTimeline> data = Collections.emptyList();
     Integer position ;
@@ -40,12 +42,6 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
 
     public AdapterGlobalTimeline(List<RowsGlobalTimeline> dataset) {
         this.data = dataset;
-    }
-
-    public void refresh(List<RowsGlobalTimeline> data)
-    {
-        this.data = data;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -56,15 +52,39 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
     }
 
     @Override
-    public void onBindViewHolder(AdapterGlobalTimeline.ViewHolder holder, int position) {
-        holder.dataView= data.get(position);
-        this.position = position;
-        holder.tv_username.setText(holder.dataView.username);
-        holder.dataPositionItem = position;
-        holder.tv_rawData.setText(holder.dataView.rawData);
-        holder.tv_timer.setText(Horloge.convertSecondeToReadable(holder.dataView.timer - holder.dataView.dateNow));
-        QuerysetAvatar(holder.dataView.username, holder);
+    public void onBindViewHolder(final AdapterGlobalTimeline.ViewHolder holder, int position) {
+
+
+        if(agtInterface != null) {
+            holder.dataView = data.get(position);
+            this.position = position;
+            Integer timer =  holder.dataView.timer - agtInterface.getCurrentHorlog();
+            if(timer > 0){
+                holder.tv_username.setText(holder.dataView.username);
+                holder.dataPositionItem = position;
+                holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
+                holder.tv_timer.setText(Horloge.convertSecondeToReadable(timer));
+                QuerysetAvatar(holder.dataView.username, holder);
+            }else{
+                data.remove(position);
+            }
+
+
+        }
+
+
     }
+
+    public void setListenner(AgtInterface clickListenner){
+        this.agtInterface = clickListenner;
+    }
+
+    public void refresh(List<RowsGlobalTimeline> data){
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
+
 
     private void QuerysetAvatar(String username, final ViewHolder holder) {
         String URL = "http://tiro-app.com/user/avatar/uri/" + username;
@@ -91,7 +111,6 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
             try {
                 JSONObject cachedData = new JSONObject(new String(entry.data, "UTF-8"));
                 if(cachedData.getBoolean("success")){
-                    Log.i("uri", cachedData.getString("profilPicUri"));
                     holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/" +cachedData.getString("profilPicUri") , ApplicationController.getsInstance().getImageLoader());
                 }
 
@@ -108,13 +127,15 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder  {
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
 
 
         TextView tv_username;
         TextView tv_rawData;
         TextView tv_timer;
         NetworkImageView avatar;
+        Button tiroplus_1h;
 
         RowsGlobalTimeline dataView;
 
@@ -126,15 +147,28 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
             super(itemView);
 
             context = itemView.getContext();
-
             tv_username = (TextView) itemView.findViewById(R.id.Cgtl_textview_username);
             tv_rawData = (TextView) itemView.findViewById(R.id.Cgtl_textview_rawData);
             tv_timer = (TextView) itemView.findViewById(R.id.Cgtl_textview_timeLeft);
             avatar = (NetworkImageView) itemView.findViewById(R.id.Cgtl_image_username);
+            tiroplus_1h = (Button) itemView.findViewById(R.id.Cgtl_btn_tiroplus_1h);
+
+            tiroplus_1h.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(agtInterface !=null) {
+                        agtInterface.offer1hClicked(v, getAdapterPosition());
+                    }
+                }
+            });
         }
+
+
     }
 
     public interface AgtInterface{
         int getCurrentHorlog();
+        void offer1hClicked(View view, int position);
+
     }
 }

@@ -2,6 +2,7 @@ package tiroapp.com.tiro_app.adapter;
 
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -45,8 +47,7 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
     Integer timer;
     Context context ;
 
-
-   public AdapterPersonnalTimeline(List<RowsPersonnalTimeline> data){
+    public AdapterPersonnalTimeline(List<RowsPersonnalTimeline> data){
         this.data = data;
     }
 
@@ -70,22 +71,24 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
         if(aptInterface != null){
             Integer timer =  holder.dataView.timer - aptInterface.getCurrentHorlog();
             this.position = position;
+
             if(timer > 1){
                 holder.tv_username.setText(holder.dataView.username);
                 holder.dataPositionItem = position;
                 holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
                 holder.tv_timer.setText(Horloge.convertSecondeToReadable(timer));
+
+                if(timer < 60){
+                    Log.i("timer", timer+"");
+                    holder.tv_timer.setTextColor(context.getResources().getColor(R.color.error_color));
+                }else{
+                    holder.tv_timer.setTextColor(context.getResources().getColor(R.color.bluePolice));
+                }
                 QuerysetAvatar(holder.dataView.username, holder);
             }
-
-
-
         }
-
-
-
-
     }
+
 
     private void QuerysetAvatar(String username, final ViewHolder holder){
         String URL = "http://tiro-app.com/user/avatar/uri/"+username;
@@ -112,7 +115,6 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
             try {
                 JSONObject cachedData = new JSONObject(new String(entry.data, "UTF-8"));
                 if(cachedData.getBoolean("success")){
-                    Log.i("uri", cachedData.getString("profilPicUri"));
                     holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/" +cachedData.getString("profilPicUri") , ApplicationController.getsInstance().getImageLoader());
                 }
 
@@ -137,6 +139,9 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        RelativeLayout rlt_layout_showing;
+        RelativeLayout rlt_layout_hide;
+
         TextView tv_username;
         TextView tv_rawData;
         TextView tv_timer;
@@ -146,11 +151,13 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
         Context context;
         public int dataPositionItem;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
 
             context = itemView.getContext();
-
+            rlt_layout_showing  = (RelativeLayout) itemView.findViewById(R.id.Cptl_rlt_layout_showing);
+            rlt_layout_hide = (RelativeLayout) itemView.findViewById(R.id.Cptl_rlt_layout_hide);
             tv_username = (TextView) itemView.findViewById(R.id.Cptl_textview_username);
             tv_rawData = (TextView) itemView.findViewById(R.id.Cptl_textview_rawData);
             tv_timer = (TextView) itemView.findViewById(R.id.Cptl_textview_timeLeft);
@@ -167,6 +174,7 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
             }
         }
     }
+
     public interface AptInterface {
         void modifyClicked(View view, int position);
         int getCurrentHorlog();

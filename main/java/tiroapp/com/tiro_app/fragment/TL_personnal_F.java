@@ -51,6 +51,7 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
     Menu theMenu;
     private int horloge;
 
+    Boolean mustUpdateRecycler = false;
 
 
     SwipeRefreshLayout mySwiper;
@@ -68,7 +69,7 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
 
     public void setmainHorloge(int horloge){
         this.horloge = horloge;
-        Log.i("tl_perso", horloge+"");
+        Log.i("tl_perso", horloge + "");
     }
 
     @Override
@@ -103,6 +104,16 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
 
 
         mRecyclerView.setLayoutManager(mLayoutManager);
+       
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
+            public void onScrollStateChanged (RecyclerView recyclerView, int newState){
+               if(newState== 0){
+                   LinearLayoutManager lm = ((LinearLayoutManager) mRecyclerView.getLayoutManager());
+
+               }
+            }
+        });
+
 
         requestData();
         if(dataset.size() != 0){
@@ -111,11 +122,10 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
 
 
         mySwiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
             @Override
             public void onRefresh() {
                 String URL = "http://tiro-app.com/user/avatar/uri/"+pref.getString("My_Username", "");;
-                ApplicationController.getsInstance().getRequestQueue().getCache().invalidate(URL, true);
+                ApplicationController.getsInstance().getRequestQueue().getCache().remove(URL);
                 requestData();
             }
         });
@@ -229,8 +239,6 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
         }
 
     }
-
-
 
     @Override
     public void modifyClicked(View view, int position) {

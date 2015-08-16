@@ -10,11 +10,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,16 +34,16 @@ import java.util.List;
 import java.util.Map;
 
 import tiroapp.com.tiro_app.ApplicationController;
+import tiroapp.com.tiro_app.MainActivity;
 import tiroapp.com.tiro_app.R;
 import tiroapp.com.tiro_app.activity.LogIn_A;
 import tiroapp.com.tiro_app.adapter.AdapterGlobalTimeline;
 import tiroapp.com.tiro_app.controller.RowsGlobalTimeline;
-import tiroapp.com.tiro_app.controller.RowsPersonnalTimeline;
 
 /**
  * Created by user on 22/07/2015.
  */
-public class TL_global_F extends Fragment {
+public class TL_global_F extends Fragment implements AdapterGlobalTimeline.AgtInterface{
 
     String tokenValue;
     Context context ;
@@ -56,14 +56,15 @@ public class TL_global_F extends Fragment {
     protected RecyclerView mRecyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
 
-    protected AdapterGlobalTimeline mAdapter;
-    protected List<RowsGlobalTimeline> dataset = Collections.emptyList();
+    public AdapterGlobalTimeline mAdapter;
+    public List<RowsGlobalTimeline> dataset = Collections.emptyList();
+
+    private int horloge;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final FragmentActivity c = getActivity();
@@ -100,19 +101,46 @@ public class TL_global_F extends Fragment {
 
 
         mySwiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
             @Override
             public void onRefresh() {
+                ApplicationController.getsInstance().getRequestQueue().getCache().clear();
                 requestData();
             }
         });
-
+       /* threadHorlog();*/
         return view;
     }
+/*
+    public void threadHorlog(){
+            Thread t = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        while (!isInterrupted()) {
+                            Thread.sleep(1000);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(mAdapter != null){
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+
+                                }
+                            });
+                        }
+                    } catch (InterruptedException e) {
+                    }
+                }
+            };
+            t.start();
+
+
+    }*/
 
 
     private void createAdapterAndSetIT() {
         mAdapter = new AdapterGlobalTimeline(dataset);
+        mAdapter.setListenner(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -186,14 +214,14 @@ public class TL_global_F extends Fragment {
             pref.edit().putInt("dateNow", Integer.parseInt(response.getString("dateNow")) ).commit();
             if(count != 0){
                 dataset = data;
+                this.horloge = Integer.parseInt(response.getString("dateNow"));
                 mRecyclerView.setVisibility(View.VISIBLE);
                 createAdapterAndSetIT();
                 mAdapter.refresh(dataset);
                 mySwiper.setRefreshing(false);
+                ((MainActivity)getActivity()).setmainHorloge(this.horloge);
             } else {
                 dataset.clear();
-                //mAdapter.clean();
-                //mAdapter.refresh(dataset);
                 mRecyclerView.setVisibility(View.GONE);
 
                 mySwiper.setRefreshing(false);
@@ -204,5 +232,54 @@ public class TL_global_F extends Fragment {
         }
 
     }
+
+    @Override
+    public int getCurrentHorlog() {
+        return ((MainActivity)getActivity()).getmainHorloge();
+    }
+
+    @Override
+    public void offer1hClicked(View view, int position) {
+        RowsGlobalTimeline current = dataset.get(position);
+
+
+        String URL = "http://tiro-app.com/post/add1h";
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id" , current.id);
+        params.put("creator", current.username);
+
+        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if(response.getString("add1h").equals("success")){
+                                Toast toast = Toast.makeText(getActivity(), "Ajout reussis", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast toast = Toast.makeText(getActivity(), "Check your connection or Server problem check out our twitter", Toast.LENGTH_LONG);
+                toast.show();
+                handleErrorRequest();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("x-access-token", tokenValue);
+                return headers;
+            }
+        };
+        ApplicationController.getsInstance().addToRequestQueue(req, "querySendPosts");
+
+    }
+
 
 }

@@ -2,8 +2,11 @@
 package tiroapp.com.tiro_app;
 
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.IBinder;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -13,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,7 +45,7 @@ import tiroapp.com.tiro_app.fragment.Profil_F;
 import tiroapp.com.tiro_app.fragment.TL_global_F;
 import tiroapp.com.tiro_app.fragment.TL_personnal_F;
 
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, HorlogeService.ServiceCallbacks {
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     ActionBar actionBar;
@@ -52,7 +56,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     Menu theMenu;
 
     FragmentManager fm;
+
     private int mainHorloge = 0;
+
+    private HorlogeService mService;
+    private boolean bound = false;
 
     public int getmainHorloge(){
         return this.mainHorloge;
@@ -60,9 +68,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     public void setmainHorloge(int horloge){
         this.mainHorloge = horloge;
-          }
+    }
 
-    public void threadHorlog(){
+  /*  public void threadHorlog(){
         Thread t = new Thread() {
             @Override
             public void run() {
@@ -81,14 +89,45 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             }
         };
         t.start();
+    }*/
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // bind to Service
+        Intent intent = new Intent(this, HorlogeService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
+    /** Callbacks for service binding, passed to bindService() */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // cast the IBinder and get MyService instance
+            HorlogeService.LocalBinder binder = (HorlogeService.LocalBinder) service;
+            mService =  binder.getService();
+            bound = true;
+            mService.setCallbacks(MainActivity.this); // register
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            bound = false;
+        }
+    };
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         actionBar = getSupportActionBar();
         actionBar.setTitle("Global");
         setContentView(R.layout.activity_main);
+
+
+        startService(new Intent(this, HorlogeService.class));
+
+
 
         pref = this.getSharedPreferences("application_credentials", Context.MODE_PRIVATE);
 
@@ -137,26 +176,22 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                         .setTabListener(this));
 
         fm = getSupportFragmentManager();
+
         getTotalTime();
-        threadHorlog();
 
         fab_addPOST = (ImageButton) findViewById(R.id.fab_addPOST);
 
         fab_addPOST.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 startActivity(new Intent(MainActivity.this, Edit_post_A.class));
             }
         });
-    }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        getTotalTime();
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -212,6 +247,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
 
+
+
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
         public AppSectionsPagerAdapter(FragmentManager fm) {
@@ -222,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
+
                     return new TL_global_F();
                 case 1:
                     return new TL_personnal_F();
@@ -314,6 +352,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     {
     }
 
+    @Override
+    public void doSomething() {
+        setmainHorloge(getmainHorloge() + 1);
+        TL_global_F frag = (TL_global_F) getSupportFragmentManager().findFragmentByTag("android:switcher:"+R.id.pager+":"+0);
+        if(frag.dataset.size() > 0 && frag.mAdapter != null){
+            frag.mAdapter.notifyDataSetChanged();
+        }
+        Log.i("Horloge", "" + getmainHorloge());
+    }
 
 
 }
