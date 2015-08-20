@@ -24,17 +24,17 @@
         android:maxSdkVersion="22" />
 
     <application
-        android:name="tiroapp.com.tiro_app.ApplicationController"
+        android:name=".ApplicationController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/CustomTheme" >
-
-        <service android:name=".HorlogeService"
-            android:exported="false"/>
+        <service
+            android:name=".HorlogeService"
+            android:exported="false" />
 
         <!-- Main activity log in -->
         <activity
-            android:name="tiroapp.com.tiro_app.activity.LogIn_A"
+            android:name=".activity.LogIn_A"
             android:label="Tiro"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" >
@@ -47,9 +47,9 @@
 
         <!-- Sign in activity -->
         <activity
-            android:name="tiroapp.com.tiro_app.activity.SignIn_A"
+            android:name=".activity.SignIn_A"
             android:label="Sign up"
-            android:parentActivityName="tiroapp.com.tiro_app.activity.LogIn_A"
+            android:parentActivityName=".activity.LogIn_A"
             android:screenOrientation="portrait"
             android:value="splitActionBarWhenNarrow"
             android:windowSoftInputMode="adjustNothing" >
@@ -60,9 +60,9 @@
 
         <!-- Form password forgotten -->
         <activity
-            android:name="tiroapp.com.tiro_app.activity.ForgotPassword_A"
+            android:name=".activity.ForgotPassword_A"
             android:label="Reset password"
-            android:parentActivityName="tiroapp.com.tiro_app.activity.LogIn_A"
+            android:parentActivityName=".activity.LogIn_A"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" >
         </activity>
@@ -70,7 +70,7 @@
         <!-- Timeline Activity -->
 
         <activity
-            android:name="tiroapp.com.tiro_app.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
@@ -78,27 +78,33 @@
                 android:value=".activity.SearchResult" />
         </activity>
         <activity
-            android:name="tiroapp.com.tiro_app.activity.Edit_post_A"
+            android:name=".activity.Edit_post_A"
             android:label="Edit"
-            android:parentActivityName="tiroapp.com.tiro_app.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name="tiroapp.com.tiro_app.activity.SearchContact_A"
+            android:name=".activity.SearchContact_A"
             android:label="@string/title_activity_search_contact"
-            android:parentActivityName="tiroapp.com.tiro_app.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tiroapp.com.tiro_app.activity.List_following"
+            android:name=".activity.List_follow"
             android:label="@string/title_activity_list_following"
-            android:parentActivityName="tiroapp.com.tiro_app.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tiroapp.com.tiro_app.activity.TakePics_A"
+            android:name=".activity.TakePics_A"
             android:label="@string/title_activity_take_pics_" >
+        </activity>
+        <activity
+            android:name=".activity.Comment_post_A"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:label="Comment" >
         </activity>
     </application>
 

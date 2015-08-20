@@ -79,5 +79,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signIn_button_signIn">SIGN IN !</string>
     <string name="signIn_button_Log_in">LOG IN !</string>
+    <string name="title_activity_comment_post_">Comment_post_A</string>
+    <string name="button_plus_1h">+1h Free</string>
 
 </resources>

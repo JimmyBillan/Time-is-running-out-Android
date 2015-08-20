@@ -29,7 +29,7 @@
         <shape
             android:shape="oval">
 
-            <solid android:color="@color/blueActionBar"/>
+            <solid android:color="@color/GreenAccentColor"/>
             />
 
         </shape>

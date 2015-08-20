@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -40,16 +41,18 @@ import java.util.Map;
 import tiroapp.com.tiro_app.activity.Edit_post_A;
 import tiroapp.com.tiro_app.activity.LogIn_A;
 import tiroapp.com.tiro_app.activity.SearchContact_A;
-import tiroapp.com.tiro_app.controller.Horloge;
+import tiroapp.com.tiro_app.controller.HorlogeVIEW;
 import tiroapp.com.tiro_app.fragment.Profil_F;
 import tiroapp.com.tiro_app.fragment.TL_global_F;
 import tiroapp.com.tiro_app.fragment.TL_personnal_F;
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, HorlogeService.ServiceCallbacks {
 
+    public static final short TIME_INTERVAL = 1;
+
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     ActionBar actionBar;
-    ImageButton fab_addPOST;
+    FloatingActionButton fab_addPOST;
     ViewPager mViewPager;
     SharedPreferences pref;
     String tokenValue;
@@ -70,30 +73,23 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         this.mainHorloge = horloge;
     }
 
-  /*  public void threadHorlog(){
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                setmainHorloge(getmainHorloge()+1);
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-        t.start();
-    }*/
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        pref = this.getSharedPreferences("application_credentials", Context.MODE_PRIVATE);
+
+        if(pref.contains("JWToken")){
+            tokenValue = pref.getString("JWToken", "No_token");
+            pref.edit().putString("JWToken", tokenValue).commit();
+            if(tokenValue.equals("No_token")){
+                startActivity(new Intent(MainActivity.this, LogIn_A.class));
+            }
+        }else{
+            startActivity(new Intent(MainActivity.this, LogIn_A.class));
+        }
+
         // bind to Service
         Intent intent = new Intent(this, HorlogeService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
@@ -125,21 +121,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         setContentView(R.layout.activity_main);
 
 
-        startService(new Intent(this, HorlogeService.class));
+       startService(new Intent(this, HorlogeService.class));
 
 
 
-        pref = this.getSharedPreferences("application_credentials", Context.MODE_PRIVATE);
 
-        if(pref.contains("JWToken")){
-            tokenValue = pref.getString("JWToken", "No_token");
-            pref.edit().putString("JWToken", tokenValue).commit();
-            if(tokenValue.equals("No_token")){
-                startActivity(new Intent(MainActivity.this, LogIn_A.class));
-            }
-        }else{
-            startActivity(new Intent(MainActivity.this, LogIn_A.class));
-        }
 
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
         getSupportFragmentManager().popBackStack();
@@ -153,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // user swipes between sections.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mAppSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -179,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         getTotalTime();
 
-        fab_addPOST = (ImageButton) findViewById(R.id.fab_addPOST);
+        fab_addPOST = (FloatingActionButton) findViewById(R.id.fab_addPOST);
 
         fab_addPOST.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     @Override
     public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
         actionBar.setTitle(mAppSectionsPagerAdapter.getPageTitle(tab.getPosition()));
+
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
@@ -280,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         public CharSequence getPageTitle(int position) {
             switch (position){
                 case 0:
-                    return "Global";
+                    return "Tiro";
                 case 1:
                     return "Your Posts";
                 case 2:
@@ -312,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                                 }
 
                                 pref.edit().putInt("timerTotal_int_minutes", response.getInt("timerTotal")).commit();
-                                edit_main_activity_item_timerTotal(Horloge.converteMinutesToReadable(response.getInt("timerTotal")));
+                                edit_main_activity_item_timerTotal(HorlogeVIEW.converteMinutesToReadable(response.getInt("timerTotal")));
                             }else {
                                 pref.edit().remove("JWToken").commit();
                                 startActivity(new Intent(MainActivity.this, LogIn_A.class));
@@ -353,13 +341,17 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     @Override
-    public void doSomething() {
-        setmainHorloge(getmainHorloge() + 1);
+    public void addTimeUnit() {
+        setmainHorloge(getmainHorloge() + TIME_INTERVAL);
         TL_global_F frag = (TL_global_F) getSupportFragmentManager().findFragmentByTag("android:switcher:"+R.id.pager+":"+0);
-        if(frag.dataset.size() > 0 && frag.mAdapter != null){
-            frag.mAdapter.notifyDataSetChanged();
+        if(frag != null){
+            if(frag.dataset.size() > 0 && frag.mAdapter != null){
+                frag.mAdapter.notifyDataSetChanged();
+            }
         }
-        Log.i("Horloge", "" + getmainHorloge());
+
+
+
     }
 
 

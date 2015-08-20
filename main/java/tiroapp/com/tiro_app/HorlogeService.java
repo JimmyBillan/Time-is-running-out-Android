@@ -39,7 +39,7 @@ public class HorlogeService extends Service {
     }
 
     public interface ServiceCallbacks {
-        void doSomething();
+        void addTimeUnit();
     }
 
     @Override
@@ -65,19 +65,11 @@ public class HorlogeService extends Service {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+        stopSelf();
     }
 
-    public Integer getHorloge() {
-        return this.horloge;
-    }
-
-    public void setHorloge(Integer horloge){
-        this.horloge = horloge;
-    }
 
     private class TimeRefreshHorlogeTash extends TimerTask {
-        private String mTimer;
 
         @Override
         public void run() {
@@ -85,7 +77,7 @@ public class HorlogeService extends Service {
                 @Override
                 public void run() {
                     if(serviceCallbacks != null){
-                        serviceCallbacks.doSomething();
+                        serviceCallbacks.addTimeUnit();
                     }
 
                 }

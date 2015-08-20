@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Cgtl_relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="1dp"
     android:background="@color/textWhiteActionBar"
     android:minHeight="72dp"
+    android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:id="@+id/Cgtl_relative_layout"
     android:paddingTop="8dp">
 
 
@@ -15,12 +16,12 @@
         android:id="@+id/Cgtl_image_username"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:adjustViewBounds="true"
         android:maxHeight="60dp"
         android:maxWidth="60dp"
         android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:src="@drawable/ic_account_circle_white_48dp" />
 
     <TextView
@@ -38,63 +39,62 @@
         android:id="@+id/Cgtl_textview_timeLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/Cgtl_textview_username"
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@id/Cgtl_image_username"
-        android:alpha="0.87"
-        android:layout_below="@+id/Cgtl_textview_username"
+        android:alpha="0.60"
         android:text="1h"
         android:textColor="@color/blueActionBar"
         android:textSize="@dimen/abc_text_size_subtitle_material_toolbar" />
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/Cgtl_LinearLayout_rawData"
-    android:layout_below="@id/Cgtl_image_username">
-    <TextView
-        android:id="@+id/Cgtl_textview_rawData"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/Cgtl_LinearLayout_rawData"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/Cgtl_image_username"
-        android:textSize="@dimen/abc_text_size_title_material"
-        android:paddingTop="8dp"
-        android:textColor="@android:color/black"
-        android:text="text area"/>
+        android:paddingBottom="8dp">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/Cgtl_textview_rawData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Cgtl_image_username"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:text="text area"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/abc_text_size_title_material" />
 
+    </LinearLayout>
 
 
     <Button
-        android:layout_below="@id/Cgtl_LinearLayout_rawData"
         android:id="@+id/Cgtl_btn_add_comment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:layout_below="@id/Cgtl_LinearLayout_rawData"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_communication_comment_deep_purp"
+        android:paddingRight="16dp"
         android:text="Comment"
-        android:textStyle="bold"
-        android:textColor="@color/blueActionBar"
-        android:layout_marginLeft="-5dp"/>
+        android:textColor="@color/GreenAccentColor"
+        android:textStyle="bold" />
 
 
     <Button
-        android:layout_below="@id/Cgtl_LinearLayout_rawData"
         android:id="@+id/Cgtl_btn_tiroplus_1h"
-        android:layout_width="63dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:text="+1h"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:textColor="@color/blueActionBar"
-        android:drawableLeft="@drawable/ic_image_timelapse_deep_purp"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginLeft="8dp"
         android:layout_toRightOf="@+id/Cgtl_btn_add_comment"
-        android:layout_toEndOf="@+id/Cgtl_btn_add_comment"
-        android:layout_marginLeft="32dp" />
-
-
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:text="@string/button_plus_1h"
+        android:textColor="@color/GreenAccentColor"
+        android:textStyle="bold"
+        android:background="@android:color/transparent"
+        android:layout_below="@id/Cgtl_LinearLayout_rawData"
+         />
 
 
 </RelativeLayout>

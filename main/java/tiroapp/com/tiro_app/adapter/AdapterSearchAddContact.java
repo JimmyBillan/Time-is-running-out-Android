@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.util.List;
 
+import tiroapp.com.tiro_app.ApplicationController;
 import tiroapp.com.tiro_app.R;
 import tiroapp.com.tiro_app.controller.RowsSearch;
 
@@ -46,7 +49,13 @@ public class AdapterSearchAddContact extends RecyclerView.Adapter<AdapterSearchA
         this.position = position;
         holder.tv_username.setText(holder.dataview.username);
         String nbfollower = Integer.toString(holder.dataview.nbFollower);
-        holder.tv_nbFollower.setText(nbfollower+" followers");
+        holder.tv_nbFollower.setText(nbfollower + " followers");
+
+        if(holder.dataview.profilPicUri.equals("null")){
+            holder.row_search_contact_avatar.setDefaultImageResId(R.drawable.ic_account_circle_white_48dp);
+        }else{
+            holder.row_search_contact_avatar.setImageUrl("http://tiro-app.com/user/avatar/" + holder.dataview.profilPicUri, ApplicationController.getsInstance().getImageLoader());
+        }
     }
 
     @Override
@@ -60,13 +69,14 @@ public class AdapterSearchAddContact extends RecyclerView.Adapter<AdapterSearchA
         TextView tv_nbFollower;
         ImageButton btn_addcontact;
         RowsSearch dataview;
+        NetworkImageView row_search_contact_avatar;
 
         public customSearchViewHolder(View itemView) {
             super(itemView);
             tv_username = (TextView) itemView.findViewById(R.id.row_search_contact_textview_username);
             tv_nbFollower = (TextView) itemView.findViewById(R.id.row_search_contact_textview_nbFollower);
             btn_addcontact = (ImageButton) itemView.findViewById(R.id.row_search_contact_ImageButton_addContact);
-
+            row_search_contact_avatar = (NetworkImageView) itemView.findViewById(R.id.row_search_contact_avatar);
             btn_addcontact.setOnClickListener(this);
         }
 

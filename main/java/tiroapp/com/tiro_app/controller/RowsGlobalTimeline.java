@@ -10,4 +10,5 @@ public class RowsGlobalTimeline {
     public int timer;
     public int dateCreation;
     public int dateNow ;
+    public boolean imAdder;
 }

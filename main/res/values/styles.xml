@@ -3,6 +3,7 @@
     <style name="CustomTheme"
         parent="@style/Theme.AppCompat.Light">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:actionBarTabBarStyle">@style/MyActionBarTab</item>
 
 
         <item name="actionMenuTextColor">@color/textWhiteActionBar</item>
@@ -15,7 +16,8 @@
         <item name="colorPrimary">@color/blueActionBar</item>
 
 
-        <item name="colorAccent">@color/blueActionBar</item>
+
+        <item name="colorAccent">@color/GreenAccentColor</item>
         <item name="colorControlHighlight">@color/bluePolice</item>
 
         <item name="colorPrimaryDark">@color/bluePolice</item>
@@ -31,18 +33,20 @@
         <item name="android:background">@color/bluePolice</item>
         <item name="android:backgroundStacked">@color/blueActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/TabTextStyle</item>
+        <item name="android:backgroundSplit">@color/GreenAccentColor</item>
 
         <item name="actionModeBackground">@color/blueActionBar</item>
         <item name="titleTextStyle">@style/TitleTextStyle</item>
         <item name="background">@color/bluePolice</item>
         <item name="backgroundStacked">@color/blueActionBar</item>
-        <item name="backgroundSplit">@color/blueActionBar</item>
+        <item name="backgroundSplit">@color/GreenAccentColor</item>
         <item name="actionBarTabTextStyle">@style/TabTextStyle</item>
 
-
-
-
-
+    </style>
+    <style name="MyActionBarTab"
+        parent="android:Widget.ActionBar.TabText">
+        <item name="android:background">@color/GreenAccentColor</item>
+        <item name="background">@color/GreenAccentColor</item>
     </style>
 
 

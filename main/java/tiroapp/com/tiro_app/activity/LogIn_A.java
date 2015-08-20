@@ -26,6 +26,7 @@ import tiroapp.com.tiro_app.ApplicationController;
 import tiroapp.com.tiro_app.MainActivity;
 import tiroapp.com.tiro_app.R;
 import tiroapp.com.tiro_app.controller.FormSignLog_C;
+import tiroapp.com.tiro_app.db.UserProfilAdapter_db;
 
 public class LogIn_A extends AppCompatActivity {
 
@@ -71,7 +72,8 @@ public class LogIn_A extends AppCompatActivity {
             password.setText(bundle.getString("EXTRA_PASSWORD"));
         }
 
-
+        mail.setText("billan.jimmy@gmail.com");
+        password.setText("12345678");
         TextView signIn = (TextView) findViewById(R.id.go_to_signin);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +136,9 @@ public class LogIn_A extends AppCompatActivity {
             SharedPreferences pref = this.getSharedPreferences("application_credentials", Context.MODE_PRIVATE);
             pref.edit().putString("JWToken", response.getString("JWToken")).commit();
             pref.edit().putString("My_Username", response.getString("Username")).commit();
+            UserProfilAdapter_db userProfilHelper = new UserProfilAdapter_db(this);
+            Long cursor = userProfilHelper.insertAppUser(response.getString("Username"), null);
+            Log.i("cursor",cursor+"");
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:layout_marginBottom="1dp">
+
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/row_comment_niv_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:maxHeight="40dp"
+            android:maxWidth="40dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_account_circle_white_48dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/row_comment_textview_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/row_search_contact_textview_username"
+                android:text="USERNAME"
+                android:textColor="@color/blue_textview"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 feb"
+
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                />
+            <TextView
+                android:id="@+id/row_comment_textview_thecomment"
+                android:layout_width="match_parent"
+                android:paddingTop="8dp"
+        android:layout_below="@+id/row_comment_textview_username"
+                android:layout_height="wrap_content"
+                android:text="here is the comment " />
+        </RelativeLayout>
+
+
+
+</LinearLayout>
+
+</LinearLayout>

@@ -1,13 +1,20 @@
 package tiroapp.com.tiro_app.adapter;
 
+import android.app.ActionBar;
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -26,7 +33,7 @@ import java.util.List;
 
 import tiroapp.com.tiro_app.ApplicationController;
 import tiroapp.com.tiro_app.R;
-import tiroapp.com.tiro_app.controller.Horloge;
+import tiroapp.com.tiro_app.controller.HorlogeVIEW;
 import tiroapp.com.tiro_app.controller.RowsGlobalTimeline;
 
 /**
@@ -37,7 +44,6 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
     private AgtInterface agtInterface;
 
     List<RowsGlobalTimeline> data = Collections.emptyList();
-    Integer position ;
     Context context ;
 
     public AdapterGlobalTimeline(List<RowsGlobalTimeline> dataset) {
@@ -53,25 +59,32 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
 
     @Override
     public void onBindViewHolder(final AdapterGlobalTimeline.ViewHolder holder, int position) {
-
+        Integer timer = 9999;
 
         if(agtInterface != null) {
             holder.dataView = data.get(position);
-            this.position = position;
-            Integer timer =  holder.dataView.timer - agtInterface.getCurrentHorlog();
-            if(timer > 0){
-                holder.tv_username.setText(holder.dataView.username);
-                holder.dataPositionItem = position;
+            timer =  holder.dataView.timer - agtInterface.getCurrentHorlog();
+            holder.tv_username.setText(holder.dataView.username);
+            holder.dataPositionItem = position;
+            holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
+            holder.tv_timer.setText(HorlogeVIEW.convertSecondeToReadable(timer));
+            QuerysetAvatar(holder.dataView.username, holder);
+            if(timer < 1){
                 holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
-                holder.tv_timer.setText(Horloge.convertSecondeToReadable(timer));
-                QuerysetAvatar(holder.dataView.username, holder);
+                holder.tv_rawData.setVisibility(View.GONE);
             }else{
-                data.remove(position);
+                holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
+                holder.tv_rawData.setVisibility(View.VISIBLE);
             }
 
+            if(holder.dataView.imAdder){
+                int img = R.drawable.ic_image_timelapse_greenopposite;
+                viewButtonPlus_1h_View(holder.tiroplus_1h, 7, true);
+            }else{
+                viewButtonPlus_1h_View(holder.tiroplus_1h, 0, false);
 
+            }
         }
-
 
     }
 
@@ -129,8 +142,7 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-
-
+        Button Cgtl_btn_add_comment;
         TextView tv_username;
         TextView tv_rawData;
         TextView tv_timer;
@@ -152,12 +164,23 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
             tv_timer = (TextView) itemView.findViewById(R.id.Cgtl_textview_timeLeft);
             avatar = (NetworkImageView) itemView.findViewById(R.id.Cgtl_image_username);
             tiroplus_1h = (Button) itemView.findViewById(R.id.Cgtl_btn_tiroplus_1h);
+            Cgtl_btn_add_comment = (Button) itemView.findViewById(R.id.Cgtl_btn_add_comment);
 
             tiroplus_1h.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(agtInterface !=null) {
                         agtInterface.offer1hClicked(v, getAdapterPosition());
+                        viewButtonPlus_1h_View(tiroplus_1h, 7, true);
+                    }
+                }
+            });
+
+            Cgtl_btn_add_comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(agtInterface != null){
+                        agtInterface.toComment(v, getAdapterPosition());
                     }
                 }
             });
@@ -166,8 +189,29 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
 
     }
 
+    private void viewButtonPlus_1h_View(Button button, int left, boolean green){
+        if(green){
+           // int img = R.drawable.ic_image_timelapse_greenopposite;
+          //  button.setCompoundDrawablesWithIntrinsicBounds(img,0,0,0);
+            button.setTextColor(context.getResources().getColor(R.color.GreenAccentColor));
+            button.setText("thank you");
+
+        }else if(!green){
+          //  int img = R.drawable.ic_image_timelapse_greenopposite;
+            button.setText(context.getResources().getString(R.string.button_plus_1h));
+            button.setTextColor(context.getResources().getColor(R.color.GreenAccentColor));
+         //   button.setCompoundDrawablesWithIntrinsicBounds(img,0,0,0);
+        }
+
+        float scale = context.getResources().getDisplayMetrics().density;
+        int dpAsPixels = (int) (left*scale + 0.5f);
+        button.setPadding(-dpAsPixels,0,0,0);
+
+    }
+
     public interface AgtInterface{
         int getCurrentHorlog();
+        void toComment(View view, int position);
         void offer1hClicked(View view, int position);
 
     }

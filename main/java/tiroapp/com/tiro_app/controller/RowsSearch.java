@@ -6,6 +6,5 @@ package tiroapp.com.tiro_app.controller;
 public class RowsSearch {
     public String username;
     public Integer nbFollower;
-
-
+    public String profilPicUri;
 }

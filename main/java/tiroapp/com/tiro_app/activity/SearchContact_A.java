@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,7 @@ public class SearchContact_A extends AppCompatActivity implements AdapterSearchA
     protected LinearLayoutManager mLayoutManager;
     protected View view;
 
-    private TextView inputSearch;
+    private EditText inputSearch;
     private Button btnSearch;
 
     @Override
@@ -65,7 +66,7 @@ public class SearchContact_A extends AppCompatActivity implements AdapterSearchA
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        inputSearch = (TextView) findViewById(R.id.A_Search_Contact_inputSearch);
+        inputSearch = (EditText) findViewById(R.id.A_Search_Contact_inputSearch);
         btnSearch = (Button) findViewById(R.id.A_Search_Contact_btnSearch);
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -99,11 +100,19 @@ public class SearchContact_A extends AppCompatActivity implements AdapterSearchA
                                 for (int i = 0; i < count; i++){
                                     RowsSearch current = new RowsSearch();
                                     current.username = arr.getJSONObject(i).getString("username");
-                                    if (!arr.getJSONObject(i).has("nbWaiter")){
+                                    if (!arr.getJSONObject(i).has("nbFollower")){
                                         current.nbFollower = 0;
                                     }else{
-                                        current.nbFollower = arr.getJSONObject(i).getInt("nbWaiter");
+                                        current.nbFollower = arr.getJSONObject(i).getInt("nbFollower");
                                     }
+
+                                    if(!arr.getJSONObject(i).has("profilPicUri")){
+                                        current.profilPicUri = "null";
+                                    }else{
+                                        current.profilPicUri = arr.getJSONObject(i).getString("profilPicUri");
+                                    }
+
+
 
                                     data.add(current);
                                 }
@@ -183,6 +192,10 @@ public class SearchContact_A extends AppCompatActivity implements AdapterSearchA
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            if(!tokenValue.equals(response.getString("JWToken"))){
+                                pref.edit().putString("JWToken", response.getString("JWToken")).commit();
+                            }
+
                             if(response.getBoolean("success")){
                                 Toast toast = Toast.makeText(getApplicationContext(), "New follow success", Toast.LENGTH_LONG);
                                 toast.show();

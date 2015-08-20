@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="tiroapp.com.tiro_app.activity.Comment_post_A">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/A_Comment_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="fill_parent"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:layout_below="@+id/A_Search_Contact_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/textWhiteActionBar"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/A_Comment_EditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:inputType="textPersonName"
+            android:background="@color/textWhiteActionBar"
+            android:hint="Say something nice"
+            android:imeOptions="actionSend"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp" />
+
+        <ImageButton
+            android:id="@+id/A_Comment_btn_Post"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/blueActionBar"
+            android:src="@drawable/ic_send_white_24dp"
+            android:textColor="@color/blue_textview" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

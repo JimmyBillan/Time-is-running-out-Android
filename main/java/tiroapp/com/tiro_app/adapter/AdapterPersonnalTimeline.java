@@ -2,7 +2,6 @@ package tiroapp.com.tiro_app.adapter;
 
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -29,7 +28,7 @@ import java.util.List;
 
 import tiroapp.com.tiro_app.ApplicationController;
 import tiroapp.com.tiro_app.R;
-import tiroapp.com.tiro_app.controller.Horloge;
+import tiroapp.com.tiro_app.controller.HorlogeVIEW;
 import tiroapp.com.tiro_app.controller.RowsPersonnalTimeline;
 
 /**
@@ -76,7 +75,7 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
                 holder.tv_username.setText(holder.dataView.username);
                 holder.dataPositionItem = position;
                 holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
-                holder.tv_timer.setText(Horloge.convertSecondeToReadable(timer));
+                holder.tv_timer.setText(HorlogeVIEW.convertSecondeToReadable(timer));
 
                 if(timer < 60){
                     Log.i("timer", timer+"");
@@ -137,7 +136,7 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout rlt_layout_showing;
         RelativeLayout rlt_layout_hide;
@@ -145,6 +144,7 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
         TextView tv_username;
         TextView tv_rawData;
         TextView tv_timer;
+        TextView tv_comment;
         NetworkImageView avatar;
         Button editPost;
         RowsPersonnalTimeline dataView;
@@ -161,22 +161,38 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
             tv_username = (TextView) itemView.findViewById(R.id.Cptl_textview_username);
             tv_rawData = (TextView) itemView.findViewById(R.id.Cptl_textview_rawData);
             tv_timer = (TextView) itemView.findViewById(R.id.Cptl_textview_timeLeft);
+
+            tv_comment = (TextView) itemView.findViewById(R.id.Cptl_btn_add_comment);
             editPost    = (Button) itemView.findViewById(R.id.Cptl_btn_edit_post);
             avatar = (NetworkImageView) itemView.findViewById(R.id.Cptl_image_username);
 
-            editPost.setOnClickListener(this);
+
+            editPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(aptInterface != null){
+                        aptInterface.modifyClicked(v, getAdapterPosition());
+                    }
+                }
+            });
+
+            tv_comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(aptInterface != null){
+                        aptInterface.toComment(v, getAdapterPosition());
+                    }
+                }
+            });
+
         }
 
-        @Override
-        public void onClick(View v) {
-            if(aptInterface != null){
-                aptInterface.modifyClicked(v, getAdapterPosition());
-            }
-        }
+
     }
 
     public interface AptInterface {
         void modifyClicked(View view, int position);
+        void toComment(View view, int position);
         int getCurrentHorlog();
 
     }

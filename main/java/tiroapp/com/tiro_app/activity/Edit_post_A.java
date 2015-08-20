@@ -28,7 +28,7 @@ import java.util.Map;
 
 import tiroapp.com.tiro_app.ApplicationController;
 import tiroapp.com.tiro_app.R;
-import tiroapp.com.tiro_app.controller.Horloge;
+import tiroapp.com.tiro_app.controller.HorlogeVIEW;
 
 public class Edit_post_A extends AppCompatActivity {
 
@@ -97,7 +97,6 @@ public class Edit_post_A extends AppCompatActivity {
                 timerTotal_int = pref.getInt("timerTotal_int_minutes", 0);
 
                 setTitle("New post");
-
         }
 
 
@@ -111,8 +110,8 @@ public class Edit_post_A extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                 timerM = progress;
-                updateMenuTimer(Horloge.converteMinutesToReadable(timerD + timerH + timerM));
-                tV_timerTotal.setText(Horloge.converteMinutesToReadable(timerTotal_int - (timerD + timerH + timerM)));
+                updateMenuTimer(HorlogeVIEW.converteMinutesToReadable(timerD + timerH + timerM));
+                tV_timerTotal.setText(HorlogeVIEW.converteMinutesToReadable(timerTotal_int - (timerD + timerH + timerM)));
                 OutOfTime();
             }
 
@@ -130,8 +129,8 @@ public class Edit_post_A extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 timerH = progress * 60;
-                updateMenuTimer(Horloge.converteMinutesToReadable(timerD + timerH + timerM));
-                tV_timerTotal.setText(Horloge.converteMinutesToReadable(timerTotal_int - (timerD + timerH + timerM)));
+                updateMenuTimer(HorlogeVIEW.converteMinutesToReadable(timerD + timerH + timerM));
+                tV_timerTotal.setText(HorlogeVIEW.converteMinutesToReadable(timerTotal_int - (timerD + timerH + timerM)));
                 OutOfTime();
             }
 
@@ -150,8 +149,8 @@ public class Edit_post_A extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 timerD = progress * 60 * 24;
-                updateMenuTimer(Horloge.converteMinutesToReadable(timerD + timerH + timerM));
-                tV_timerTotal.setText(Horloge.converteMinutesToReadable(timerTotal_int - (timerD + timerH + timerM)));
+                updateMenuTimer(HorlogeVIEW.converteMinutesToReadable(timerD + timerH + timerM));
+                tV_timerTotal.setText(HorlogeVIEW.converteMinutesToReadable(timerTotal_int - (timerD + timerH + timerM)));
                 OutOfTime();
             }
 
@@ -292,10 +291,7 @@ public class Edit_post_A extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed()
-    {super.onBackPressed();
-    }
+
 
     private void postValidator(){
         rawData = tV_RawData.getText().toString();

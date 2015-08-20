@@ -35,6 +35,7 @@ import java.util.Map;
 import tiroapp.com.tiro_app.ApplicationController;
 import tiroapp.com.tiro_app.MainActivity;
 import tiroapp.com.tiro_app.R;
+import tiroapp.com.tiro_app.activity.Comment_post_A;
 import tiroapp.com.tiro_app.activity.Edit_post_A;
 import tiroapp.com.tiro_app.activity.LogIn_A;
 import tiroapp.com.tiro_app.adapter.AdapterPersonnalTimeline;
@@ -124,8 +125,6 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
         mySwiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                String URL = "http://tiro-app.com/user/avatar/uri/"+pref.getString("My_Username", "");;
-                ApplicationController.getsInstance().getRequestQueue().getCache().remove(URL);
                 requestData();
             }
         });
@@ -251,6 +250,15 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
         intent.putExtra("EXTRA_POST_TOTAL_TIMER_INT", pref.getInt("timerTotal_int_minutes", 0));
         intent.putExtra("EXTRA_POST_TOTAL_TIMER_String", pref.getString("timerTotal_String", "00h00"));
         startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void toComment(View view, int position) {
+        RowsPersonnalTimeline current = dataset.get(position);
+        Intent intent = new Intent(getActivity(), Comment_post_A.class);
+        intent.putExtra("id", current.id);
+        intent.putExtra("postAuthor", current.username);
+        startActivityForResult(intent,2);
     }
 
     @Override

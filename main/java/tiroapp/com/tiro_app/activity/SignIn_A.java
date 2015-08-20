@@ -86,10 +86,6 @@ public class SignIn_A extends AppCompatActivity {
 
        // getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        username.setText("jimmy");
-        mail.setText("billan.jimmy@gmail.com");
-        age.setText("22");
-        password.setText("12345678");
 
 }
 
@@ -126,7 +122,6 @@ public class SignIn_A extends AppCompatActivity {
                                     }else if(!response.getBoolean("success")){
                                         Toast toast = Toast.makeText(getApplicationContext(), "Sign in failed", Toast.LENGTH_SHORT);
                                         toast.show();
-                                        Log.e("http", response.toString());
                                     }
                                 }
                                 catch (JSONException e){e.printStackTrace();}
@@ -135,7 +130,6 @@ public class SignIn_A extends AppCompatActivity {
                         new Response.ErrorListener(){
                             @Override
                             public void onErrorResponse(VolleyError error){
-                                Log.i("Error : ", error.getMessage()+"");
                                 Toast toast = Toast.makeText(getApplicationContext(), "Check your connection or Server problem check out our twitter", Toast.LENGTH_LONG);
                                 toast.show();
                             }

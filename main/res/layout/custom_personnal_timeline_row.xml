@@ -89,33 +89,7 @@
         android:layout_below="@+id/Cptl_textview_rawData" />
 
 
-    <Button
-        android:id="@+id/Cptl_btn_tiroplus_1h"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:text="+1h"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:textColor="@color/blueActionBar"
-        android:alpha="0.70"
-        android:layout_below="@+id/Cptl_textview_rawData"
-        android:layout_toRightOf="@+id/Cptl_btn_add_comment"
-        android:layout_toEndOf="@+id/Cptl_btn_add_comment"
-        android:layout_marginLeft="32dp" />
-    <Button
-        android:id="@+id/Cptl_btn_tiroplus_10m"
-        android:layout_width="45dp"
-        android:text="+10m"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:layout_toRightOf="@+id/Cptl_btn_tiroplus_1h"
-        android:textColor="@color/blueActionBar"
-        android:alpha="0.70"
-        android:layout_alignTop="@+id/Cptl_btn_tiroplus_1h"
-        android:layout_marginLeft="32dp" />
+
 
     </RelativeLayout>
 

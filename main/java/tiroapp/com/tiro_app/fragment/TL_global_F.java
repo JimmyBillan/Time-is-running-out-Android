@@ -36,9 +36,11 @@ import java.util.Map;
 import tiroapp.com.tiro_app.ApplicationController;
 import tiroapp.com.tiro_app.MainActivity;
 import tiroapp.com.tiro_app.R;
+import tiroapp.com.tiro_app.activity.Comment_post_A;
 import tiroapp.com.tiro_app.activity.LogIn_A;
 import tiroapp.com.tiro_app.adapter.AdapterGlobalTimeline;
 import tiroapp.com.tiro_app.controller.RowsGlobalTimeline;
+import tiroapp.com.tiro_app.controller.RowsPersonnalTimeline;
 
 /**
  * Created by user on 22/07/2015.
@@ -103,40 +105,11 @@ public class TL_global_F extends Fragment implements AdapterGlobalTimeline.AgtIn
         mySwiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ApplicationController.getsInstance().getRequestQueue().getCache().clear();
                 requestData();
             }
         });
-       /* threadHorlog();*/
         return view;
     }
-/*
-    public void threadHorlog(){
-            Thread t = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        while (!isInterrupted()) {
-                            Thread.sleep(1000);
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if(mAdapter != null){
-                                        mAdapter.notifyDataSetChanged();
-                                    }
-
-                                }
-                            });
-                        }
-                    } catch (InterruptedException e) {
-                    }
-                }
-            };
-            t.start();
-
-
-    }*/
-
 
     private void createAdapterAndSetIT() {
         mAdapter = new AdapterGlobalTimeline(dataset);
@@ -209,6 +182,7 @@ public class TL_global_F extends Fragment implements AdapterGlobalTimeline.AgtIn
                 current.timer = Integer.parseInt(arr.getJSONObject(i).getString("timer"));
                 current.dateNow = Integer.parseInt(response.getString("dateNow"));
                 current.id = arr.getJSONObject(i).getString("_id");
+                current.imAdder = arr.getJSONObject(i).getBoolean("IamAdder");
                 data.add(current);
             }
             pref.edit().putInt("dateNow", Integer.parseInt(response.getString("dateNow")) ).commit();
@@ -239,10 +213,17 @@ public class TL_global_F extends Fragment implements AdapterGlobalTimeline.AgtIn
     }
 
     @Override
-    public void offer1hClicked(View view, int position) {
+    public void toComment(View view, int position) {
         RowsGlobalTimeline current = dataset.get(position);
+        Intent intent = new Intent(getActivity(), Comment_post_A.class);
+        intent.putExtra("id", current.id);
+        intent.putExtra("postAuthor", current.username);
+        startActivityForResult(intent,2);
+    }
 
-
+    @Override
+    public void offer1hClicked(View view, final int position) {
+        final RowsGlobalTimeline current = dataset.get(position);
         String URL = "http://tiro-app.com/post/add1h";
         HashMap<String, String> params = new HashMap<>();
         params.put("id" , current.id);
@@ -254,8 +235,8 @@ public class TL_global_F extends Fragment implements AdapterGlobalTimeline.AgtIn
                     public void onResponse(JSONObject response) {
                         try {
                             if(response.getString("add1h").equals("success")){
-                                Toast toast = Toast.makeText(getActivity(), "Ajout reussis", Toast.LENGTH_LONG);
-                                toast.show();
+                                dataset.get(position).imAdder = true;
+                                refreshItemTimerQuery(response.getString("id"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -278,6 +259,50 @@ public class TL_global_F extends Fragment implements AdapterGlobalTimeline.AgtIn
             }
         };
         ApplicationController.getsInstance().addToRequestQueue(req, "querySendPosts");
+
+    }
+
+    public void refreshItemTimerQuery(String id){
+        String URL = "http://tiro-app.com/post/timer/"+id;
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                                if(response.has("success")){
+                                    if(response.getBoolean("success")){
+                                        Integer size = dataset.size();
+                                        Log.i("timer recu", response.getInt("timer")+"");
+                                        Log.i("id recu", response.getString("id"));
+
+                                        for(int i=0; i< size; i++) {
+                                            if (dataset.get(i).id.equals(response.getString("id"))) {
+                                                dataset.get(i).timer = response.getInt("timer");
+                                            }
+                                        }
+                                    }else{
+                                        Log.i("bool",response.getBoolean("success")+"");
+                                    }
+
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast toast = Toast.makeText(getActivity(), "Check your connection or Server problem check out our twitter", Toast.LENGTH_LONG);
+                toast.show();
+                handleErrorRequest();
+            }
+        });
+        ApplicationController.getsInstance().addToRequestQueue(req, "GetPersonnalPost");
+        Log.i("id sent",id);
+
 
     }
 

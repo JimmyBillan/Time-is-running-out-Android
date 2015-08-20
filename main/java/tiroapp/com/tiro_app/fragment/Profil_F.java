@@ -1,8 +1,6 @@
 package tiroapp.com.tiro_app.fragment;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,20 +12,18 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -46,19 +42,19 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import tiroapp.com.tiro_app.ApplicationController;
+import tiroapp.com.tiro_app.HorlogeService;
 import tiroapp.com.tiro_app.R;
-import tiroapp.com.tiro_app.activity.List_following;
+import tiroapp.com.tiro_app.activity.List_follow;
 import tiroapp.com.tiro_app.activity.LogIn_A;
-import tiroapp.com.tiro_app.adapter.AdapterFollowing;
+import tiroapp.com.tiro_app.adapter.AdapterFollow;
 import tiroapp.com.tiro_app.controller.RowsFollowing;
+import tiroapp.com.tiro_app.db.UserProfilAdapter_db;
 import tiroapp.com.tiro_app.interfaces.DialogClickListenerImagePicker;
 
 /**
@@ -81,26 +77,47 @@ public class Profil_F extends Fragment implements DialogClickListenerImagePicker
     protected RecyclerView.LayoutManager mLayoutManager;
     protected List<RowsFollowing> dataset = Collections.emptyList();
 
-    private AdapterFollowing mAdapter;
+    private AdapterFollow mAdapter;
 
-    private TextView tv_add_profil_pics, f_profil_textview_nbWaiting, f_profil_textview_username;
+    private TextView tv_add_profil_pics, f_profil_textview_nbFollowing, f_profil_textview_username,f_profil_textview_nbFollower;
     private NetworkImageView f_profil_image_NImageView;
 
     private String  ppPath;
     private Uri selectedImageUri;
     Bitmap pp;
 
+    SwipeRefreshLayout mySwiper;
 
-    private RelativeLayout F_profil_big_btn_following;
+    private LinearLayout F_profil_big_btn_following;
+    private LinearLayout F_profil_big_btn_follower;
+
+    private
+
+    UserProfilAdapter_db userProfilHelper;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        pref = getActivity().getSharedPreferences("application_credentials", Context.MODE_PRIVATE);
+        tokenValue = pref.getString("JWToken", "No_token");
+
+    }
+
+    @Override
+    public void onResume() {
+        Log.e("DEBUG", "onResume of LoginFragment");
+        super.onResume();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profil_f, container, false);
-        pref = getActivity().getSharedPreferences("application_credentials", Context.MODE_PRIVATE);
-        tokenValue = pref.getString("JWToken", "No_token");
 
-        f_profil_textview_nbWaiting = (TextView) view.findViewById(R.id.f_profil_textview_nbWaiting);
+
+        f_profil_textview_nbFollowing = (TextView) view.findViewById(R.id.f_profil_textview_nbFollowing);
+        f_profil_textview_nbFollower = (TextView) view.findViewById(R.id.f_profil_textview_nbFollower);
         f_profil_textview_username = (TextView) view.findViewById(R.id.f_profil_textview_username);
+
 
         f_profil_image_NImageView = (NetworkImageView) view.findViewById(R.id.f_profil_image_NImageView);
         f_profil_image_NImageView.setDefaultImageResId(R.drawable.ic_image_camera_blueaction_no_picture);
@@ -109,16 +126,30 @@ public class Profil_F extends Fragment implements DialogClickListenerImagePicker
         btn_disconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getActivity().stopService(new Intent(getActivity(), HorlogeService.class));
                 getActivity().getSharedPreferences("application_credentials", 0).edit().clear().commit();
                 getActivity().finish();
             }
         });
 
-        F_profil_big_btn_following = (RelativeLayout) view.findViewById(R.id.F_profil_big_btn_following);
+        F_profil_big_btn_following = (LinearLayout) view.findViewById(R.id.F_profil_big_btn_following);
         F_profil_big_btn_following.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), List_following.class));
+                Intent intent = new Intent(getActivity(), List_follow.class);
+                intent.putExtra("TYPE", "following");
+                startActivity(intent);
+
+            }
+        });
+
+        F_profil_big_btn_follower = (LinearLayout) view.findViewById(R.id.F_profil_big_btn_follower);
+        F_profil_big_btn_follower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), List_follow.class);
+                intent.putExtra("TYPE", "follower");
+                startActivity(intent);
             }
         });
 
@@ -130,8 +161,20 @@ public class Profil_F extends Fragment implements DialogClickListenerImagePicker
             }
         });
 
-        getProfilData();
+        mySwiper = (SwipeRefreshLayout) view.findViewById(R.id.f_profil_swipeResfresh);
+        mySwiper.setColorSchemeResources(R.color.refresh_swiper_color_3, R.color.refresh_swiper_color_2, R.color.refresh_swiper_color_1);
 
+        mySwiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getProfilData();
+            }
+        });
+
+
+
+
+        getProfilData();
         return view;
 
     }
@@ -333,39 +376,41 @@ public class Profil_F extends Fragment implements DialogClickListenerImagePicker
         return serverResponseCode;
     }
 
-
     public void getProfilData() {
+        final String username = pref.getString("My_Username", "#ERROR#");
+     /*   UserProfilAdapter_db userProfilHelper = new UserProfilAdapter_db(getActivity());
+        ContentValues userOffline = userProfilHelper.getUserProfil(username);
 
-        String username = pref.getString("My_Username", "#ERROR#");
+        if(userOffline !=null){
+           Log.i("username  ",userOffline.getAsString("Username"));
+           Log.i("NbFollower  ",userOffline.getAsString("NbFollower"));
+           Log.i("NbFollowing  ",userOffline.getAsString("NbFollowing"));
+           Log.i("Description  ", userOffline.getAsString("Description") + " ");
+        }
+    */
+
         if(!username.equals("#ERROR#")){
             String URL = "http://tiro-app.com/user/"+username;
+            JSONObject cached;
+
+                if(ApplicationController.getsInstance().getRequestQueue().getCache().get(URL) != null ){
+
+                    try {
+                        cached = new JSONObject(new String(ApplicationController.getsInstance().getRequestQueue().getCache().get(URL).data,"UTF-8"));
+                        DisplayProfil(cached);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONObject>(){
                         @Override
                         public void onResponse(JSONObject response) {
-                            try {
-                                if (response.getBoolean("success")) {
-                                    String tempToken = response.getString("JWToken");
-                                    if (!tokenValue.equals(tempToken)) {
-                                        pref.edit().putString("JWToken", tempToken).commit();
-                                        tokenValue = tempToken;
-                                    }
-                                    JSONObject data = response.getJSONObject("userData");
-                                    try {
-                                        f_profil_textview_nbWaiting.setText(Integer.toString(data.getInt("nbWaiting")));
-                                    }catch (JSONException e){
-                                        e.printStackTrace();
-                                    }
-                                    f_profil_textview_username.setText(data.getString("username"));
-                                    f_profil_image_NImageView.setImageUrl("http://tiro-app.com/user/avatar/" + data.getString("profilPicUri"), ApplicationController.getsInstance().getImageLoader());
-                                } else {
-                                    pref.edit().remove("JWToken").commit();
-                                    startActivity(new Intent(getActivity(), LogIn_A.class));
-                                }
-                            }catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            DisplayProfil(response);
                         }
                     }, new Response.ErrorListener(){
                 @Override
@@ -382,7 +427,52 @@ public class Profil_F extends Fragment implements DialogClickListenerImagePicker
                     return headers;
                 }
             };
+
             ApplicationController.getsInstance().addToRequestQueue(req, "GetPersonnalPost");
+        }
+
+    }
+
+    public void DisplayProfil(JSONObject response) {
+        try {
+            if (response.getBoolean("success")) {
+
+             //   UserProfilAdapter_db userProfilHelper = new UserProfilAdapter_db(getActivity());
+              //  ContentValues userWithoutKey = new ContentValues();
+
+
+                String tempToken = response.getString("JWToken");
+                if (!tokenValue.equals(tempToken)) {
+                    pref.edit().putString("JWToken", tempToken).commit();
+                    tokenValue = tempToken;
+                }
+                JSONObject data = response.getJSONObject("userData");
+                try {
+                    f_profil_textview_nbFollowing.setText(Integer.toString(data.getInt("nbFollowing")));
+                 //   userWithoutKey.put("nbFollowing", Integer.toString(data.getInt("nbFollowing")));
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+                try {
+                    f_profil_textview_nbFollower.setText(Integer.toString(data.getInt("nbFollower")));
+                  //  userWithoutKey.put("NbFollower", Integer.toString(data.getInt("nbFollower")));
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+                f_profil_textview_username.setText(data.getString("username"));
+                try {
+                    f_profil_image_NImageView.setImageUrl("http://tiro-app.com/user/avatar/" + data.getString("profilPicUri"), ApplicationController.getsInstance().getImageLoader());
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+               // Long cursor = userProfilHelper.insertAppUser(data.getString("username"), userWithoutKey);
+            } else {
+                pref.edit().remove("JWToken").commit();
+                startActivity(new Intent(getActivity(), LogIn_A.class));
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
         }
 
     }
