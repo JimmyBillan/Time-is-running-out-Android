@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     android:background="@color/bluebackgroundLight"
-    tools:context="tiroapp.com.tiro_app.activity.Edit_post_A">
+    tools:context="com.tiro_app.tiro_app.activity.Edit_post_A">
 
     <LinearLayout
         android:orientation="vertical"
@@ -27,10 +26,100 @@
         </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="@color/textWhiteActionBar">
+
+        <ImageButton
+            android:id="@+id/A_Edit_Post_display_time_seekbar"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:text="@string/A_Edit_Post_Button_SetTimer"
+            android:textColor="@color/GreenAccentColor"
+            android:background="@color/textWhiteActionBar"
+            android:src="@drawable/ic_action_image_timer_greenopposite"/>
+
+        <ImageButton
+            android:id="@+id/A_Edit_Post_Gallery_btn"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:text="@string/A_Edit_Post_Button_SetImage"
+        android:textColor="@color/GreenAccentColor"
+        android:background="@color/textWhiteActionBar"
+        android:src="@drawable/ic_image_photo_green"/>
+
+        <ImageButton
+            android:id="@+id/A_Edit_Post_Camera_btn"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:text="@string/A_Edit_Post_Button_SetImage"
+            android:textColor="@color/GreenAccentColor"
+            android:background="@color/textWhiteActionBar"
+            android:src="@drawable/ic_image_camera_alt_green"/>
+        <ImageButton
+            android:id="@+id/A_Edit_Post_GPS_btn"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:text="@string/A_Edit_Post_Button_SetImage"
+            android:textColor="@color/GreenAccentColor"
+            android:background="@color/textWhiteActionBar"
+            android:src="@drawable/ic_device_gps_fixed_green"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/A_Edit_Post_timerPost"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:paddingRight="16dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/blue_textview"
+                    android:text="0h" />
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="5dp">
+
+                <TextView
+
+                    android:id="@+id/A_Edit_Post_timerTotal"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingRight="16dp"
+                    android:textSize="12dp"
+                    android:textColor="@color/blue_textview"
+                    android:text="1Day 22h" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/A_Edit_Post_seek_conteneur"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/textWhiteActionBar"
+        android:visibility="visible"
         >
 
 
@@ -117,40 +206,26 @@
 
     </LinearLayout>
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:orientation="vertical"
-        android:layout_gravity="center_vertical"
-        >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-
-
-        <TextView
+        <ImageView
+            android:scaleType="centerInside"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/A_Edit_Post_ImagePreview" />
+        <Button
+            android:id="@+id/A_Edit_Post_Button_RemoveImage"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:textSize="@dimen/abc_text_size_title_material"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_action_highlight_remove_green"
+            android:text="@string/A_Edit_Post_Button_RemoveImage"
+            android:background="#0000"
             android:textStyle="bold"
-            android:textColor="@color/blue_textview"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:layout_toLeftOf="@+id/A_Edit_Post_timerTotal"
-            android:text="@string/A_Edit_Post_totalAccount" />
-
-        <TextView
-            android:id="@+id/A_Edit_Post_timerTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:textSize="@dimen/abc_text_size_title_material"
-            android:textStyle="bold"
-            android:textColor="@color/blue_textview"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="8dp"
-            android:layout_alignParentRight="true"
-            android:text=" 0H00" />
-
-    </RelativeLayout >
-
+            android:visibility="gone"
+            android:textColor="@color/GreenAccentColor"
+            android:layout_gravity="end"/>
+    </RelativeLayout>
 
 
 

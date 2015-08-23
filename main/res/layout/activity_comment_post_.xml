@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tiroapp.com.tiro_app.activity.Comment_post_A">
+    tools:context="com.tiro_app.tiro_app.activity.Comment_post_A">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/A_Comment_RecyclerView"
@@ -16,6 +16,7 @@
         android:layout_below="@+id/A_Search_Contact_RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="bottom"
         android:background="@color/textWhiteActionBar"
         android:orientation="horizontal">
 

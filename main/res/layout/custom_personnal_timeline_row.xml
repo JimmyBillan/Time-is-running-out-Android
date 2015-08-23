@@ -1,127 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="1dp"
     android:background="@color/textWhiteActionBar"
     android:minHeight="72dp"
+
+    android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:id="@+id/Cptl_rlt_layout"
     android:paddingTop="8dp">
 
-    <RelativeLayout
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/textWhiteActionBar"
         android:id="@+id/Cptl_rlt_layout_showing"
+
         >
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/Cptl_image_username"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:maxHeight="60dp"
-        android:maxWidth="60dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-
-
-        android:src="@drawable/ic_account_circle_white_48dp" />
-
-    <TextView
-        android:id="@+id/Cptl_textview_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/Cptl_image_username"
-        android:text="Username"
-        android:textColor="@color/blue_textview"
-        android:textSize="@dimen/abc_text_size_title_material"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/Cptl_textview_timeLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/Cptl_image_username"
-        android:alpha="0.87"
-        android:layout_below="@+id/Cptl_textview_username"
-        android:text="54min left"
-        android:textColor="@color/blueActionBar"
-        android:textSize="@dimen/abc_text_size_subtitle_material_toolbar" />
-
-    <Button
-        android:id="@+id/Cptl_btn_edit_post"
-        android:layout_width="70dp"
-        android:layout_height="16dp"
-        android:text="edit"
-        android:textStyle="bold"
-        android:textColor="@color/bluePolice"
-        android:layout_alignParentRight="true"
-        android:background="@android:color/transparent"
-        android:drawableRight="@drawable/ic_image_edit_deep_purp"
-        android:alpha="0.77"/>
-
-    <TextView
-        android:id="@+id/Cptl_textview_rawData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Cptl_image_username"
-        android:textSize="@dimen/abc_text_size_title_material"
-        android:paddingTop="8dp"
-        android:textColor="@android:color/black"
-        android:text="text text Le messageLe message text Le messageLe message text Le messageLe message text Le messageLe message text Le message" />
-
-    <Button
-        android:id="@+id/Cptl_btn_add_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_communication_comment_deep_purp"
-        android:text="Comment"
-        android:textStyle="bold"
-        android:textColor="@color/blueActionBar"
-        android:alpha="0.70"
-        android:layout_marginLeft="-5dp"
-        android:layout_below="@+id/Cptl_textview_rawData" />
-
-
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/textWhiteActionBar"
-        android:id="@+id/Cptl_rlt_layout_hide"
-        android:visibility="gone"
-        >
 
-        <TextView
-            android:layout_width="wrap_content"
+        android:orientation="vertical" >
+
+
+        <RelativeLayout
+            android:id="@+id/Cptl_rltl_header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="This post is dead "
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageButton3"
-            android:src="@drawable/abc_ic_clear_mtrl_alpha"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+            android:orientation="horizontal"
+            >
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/Cptl_image_username"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:maxHeight="60dp"
+                android:maxWidth="60dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
 
 
+                android:src="@drawable/ic_account_circle_white_48dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/Cptl_image_username"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/Cptl_textview_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textColor="@color/blue_textview"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/Cptl_textview_timeLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/Cptl_image_username"
+                    android:alpha="0.87"
+                    android:layout_below="@+id/Cptl_textview_username"
+                    android:text="54min left"
+                    android:textColor="@color/blueActionBar"
+                    android:textSize="@dimen/abc_text_size_subtitle_material_toolbar" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/Cptl_btn_edit_post"
+                android:layout_width="70dp"
+                android:layout_height="28dp"
+                android:text="edit"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/bluePolice"
+                android:background="@android:color/transparent"
+
+                android:drawableRight="@drawable/ic_image_edit_deep_purp"
+                android:alpha="0.77"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+
+            android:layout_below="@id/Cptl_rltl_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/Cptl_textview_rawData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_title_material"
+                android:paddingTop="8dp"
+                android:textColor="@android:color/black"
+                android:text="text text Le messageLe message text Le messageLe message text Le messageLe message text Le messageLe message text Le message" />
+
+            <Button
+                android:id="@+id/Cptl_btn_add_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_communication_comment_deep_purp"
+                android:text="Comment"
+                android:textStyle="bold"
+                android:textColor="@color/blueActionBar"
+                android:alpha="0.70"
+                android:layout_marginLeft="-5dp"
+                android:layout_below="@+id/Cptl_nImageView_photo" />
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/Cptl_nImageView_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_below="@+id/Cptl_textview_rawData"
 
 
-</RelativeLayout>
+                android:src="@drawable/ic_account_circle_white_48dp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/textWhiteActionBar"
+            android:id="@+id/Cptl_rlt_layout_hide"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="This post is dead "
+                android:id="@+id/textView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton3"
+                android:src="@drawable/abc_ic_clear_mtrl_alpha"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+
+
+</LinearLayout>

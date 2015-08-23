@@ -38,10 +38,10 @@
                 android:textColor="@color/blue_textview"
                 android:textStyle="bold" />
             <TextView
+                android:id="@+id/row_comment_textview_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10 feb"
-
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 />

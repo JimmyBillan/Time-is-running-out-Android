@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tiroapp.com.tiro_app" >
+    package="com.tiro_app.tiro_app" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -24,17 +24,18 @@
         android:maxSdkVersion="22" />
 
     <application
-        android:name=".ApplicationController"
+        android:label="Tiro"
+        android:name="com.tiro_app.tiro_app.ApplicationController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/CustomTheme" >
         <service
-            android:name=".HorlogeService"
+            android:name="com.tiro_app.tiro_app.HorlogeService"
             android:exported="false" />
 
         <!-- Main activity log in -->
         <activity
-            android:name=".activity.LogIn_A"
+            android:name="com.tiro_app.tiro_app.activity.LogIn_A"
             android:label="Tiro"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" >
@@ -47,22 +48,22 @@
 
         <!-- Sign in activity -->
         <activity
-            android:name=".activity.SignIn_A"
+            android:name="com.tiro_app.tiro_app.activity.SignIn_A"
             android:label="Sign up"
-            android:parentActivityName=".activity.LogIn_A"
+            android:parentActivityName="com.tiro_app.tiro_app.activity.LogIn_A"
             android:screenOrientation="portrait"
             android:value="splitActionBarWhenNarrow"
             android:windowSoftInputMode="adjustNothing" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="tiroapp.com.tiro_app.activity.LogIn_A" />
+                android:value="com.tiro_app.tiro_app.activity.LogIn_A" />
         </activity>
 
         <!-- Form password forgotten -->
         <activity
-            android:name=".activity.ForgotPassword_A"
+            android:name="com.tiro_app.tiro_app.activity.ForgotPassword_A"
             android:label="Reset password"
-            android:parentActivityName=".activity.LogIn_A"
+            android:parentActivityName="com.tiro_app.tiro_app.activity.LogIn_A"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" >
         </activity>
@@ -70,7 +71,7 @@
         <!-- Timeline Activity -->
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.tiro_app.tiro_app.MainActivity"
             android:screenOrientation="portrait"
             android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
@@ -78,31 +79,31 @@
                 android:value=".activity.SearchResult" />
         </activity>
         <activity
-            android:name=".activity.Edit_post_A"
+            android:name="com.tiro_app.tiro_app.activity.Edit_post_A"
             android:label="Edit"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.tiro_app.tiro_app.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
         <activity
-            android:name=".activity.SearchContact_A"
+            android:name="com.tiro_app.tiro_app.activity.SearchContact_A"
             android:label="@string/title_activity_search_contact"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.tiro_app.tiro_app.MainActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.List_follow"
+            android:name="com.tiro_app.tiro_app.activity.List_follow"
             android:label="@string/title_activity_list_following"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.tiro_app.tiro_app.MainActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.TakePics_A"
+            android:name="com.tiro_app.tiro_app.activity.TakePics_A"
             android:label="@string/title_activity_take_pics_" >
         </activity>
         <activity
-            android:name=".activity.Comment_post_A"
-            android:parentActivityName=".MainActivity"
+            android:name="com.tiro_app.tiro_app.activity.Comment_post_A"
+            android:parentActivityName="com.tiro_app.tiro_app.MainActivity"
             android:screenOrientation="portrait"
             android:label="Comment" >
         </activity>

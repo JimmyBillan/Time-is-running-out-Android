@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@color/bluebackgroundLight"
-    tools:context="tiroapp.com.tiro_app.activity.SearchContact_A">
+    tools:context="com.tiro_app.tiro_app.activity.SearchContact_A">
 
     <LinearLayout
         android:layout_width="match_parent"
