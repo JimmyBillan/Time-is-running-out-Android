@@ -116,12 +116,19 @@ public class SignIn_A extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try{
-                                    if(response.getBoolean("success")){
-                                        readResponse(checker.mail, checker.password);
-                                    }else if(!response.getBoolean("success")){
-                                        Toast toast = Toast.makeText(getApplicationContext(), "Sign in failed", Toast.LENGTH_SHORT);
-                                        toast.show();
+                                    if(response.has("success")){
+                                        if(response.getBoolean("success")){
+                                            readResponse(checker.mail, checker.password);
+                                        }else if(!response.getBoolean("success")){
+                                            if(response.has("why")){
+                                                Toast toast = Toast.makeText(getApplicationContext(), response.getString("why"), Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            }
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Sign in failed", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }
                                     }
+
                                 }
                                 catch (JSONException e){e.printStackTrace();}
                             }
@@ -134,9 +141,6 @@ public class SignIn_A extends AppCompatActivity {
                             }
                         }
                 );
-
-
-
                 ApplicationController.getsInstance().addToRequestQueue(req, "SignInPost");
             }
         }

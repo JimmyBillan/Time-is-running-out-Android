@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -61,24 +63,38 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
             holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
             holder.tv_timer.setText(HorlogeVIEW.convertSecondeToReadable(timer));
             if(timer < 1){
-                holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
-                holder.tv_rawData.setVisibility(View.GONE);
+                holder.Cgtl_RelativeLayout_rawData.setVisibility(View.GONE);
+                holder.tv_timer.setText("DEAD !");
             }else{
                 holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
                 holder.tv_rawData.setVisibility(View.VISIBLE);
+
+                if(timer < 60){
+                    holder.tv_timer.setTextColor(context.getResources().getColor(R.color.error_color));
+                }else{
+                    holder.tv_timer.setTextColor(context.getResources().getColor(R.color.bluePolice));
+                }
             }
 
             if(holder.dataView.imAdder){
-                int img = R.drawable.ic_image_timelapse_greenopposite;
                 viewButtonPlus_1h_View(holder.tiroplus_1h, 7, true);
             }else{
                 viewButtonPlus_1h_View(holder.tiroplus_1h, 0, false);
             }
 
+
+
             if(holder.dataView.avatarUri !=null){
                 holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/" + holder.dataView.avatarUri, ApplicationController.getsInstance().getImageLoader());
             }else{
                 holder.avatar.setDefaultImageResId(R.drawable.ic_image_camera_blueaction_no_picture);
+            }
+
+            if(holder.dataView.photoUri !=null){
+                holder.ImageView_photo.setVisibility(View.VISIBLE);
+                holder.ImageView_photo.setImageUrl("http://tiro-app.com/post/photo/" + holder.dataView.photoUri, ApplicationController.getsInstance().getImageLoader());
+            }else{
+                holder.ImageView_photo.setVisibility(View.GONE);
             }
         }
 
@@ -107,9 +123,9 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
         TextView tv_username;
         TextView tv_rawData;
         TextView tv_timer;
-        NetworkImageView avatar;
+        NetworkImageView avatar, ImageView_photo;
         Button tiroplus_1h;
-
+        LinearLayout Cgtl_RelativeLayout_rawData;
         RowsGlobalTimeline dataView;
 
 
@@ -124,8 +140,11 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
             tv_rawData = (TextView) itemView.findViewById(R.id.Cgtl_textview_rawData);
             tv_timer = (TextView) itemView.findViewById(R.id.Cgtl_textview_timeLeft);
             avatar = (NetworkImageView) itemView.findViewById(R.id.Cgtl_image_username);
+            ImageView_photo = (NetworkImageView) itemView.findViewById(R.id.Cgtl_nImageView_photo);
             tiroplus_1h = (Button) itemView.findViewById(R.id.Cgtl_btn_tiroplus_1h);
             Cgtl_btn_add_comment = (Button) itemView.findViewById(R.id.Cgtl_btn_add_comment);
+            Cgtl_RelativeLayout_rawData = (LinearLayout) itemView.findViewById(R.id.Cgtl_RelativeLayout_rawData);
+
 
             tiroplus_1h.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -176,41 +195,7 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
         void offer1hClicked(View view, int position);
 
     }
-    /* private void QuerysetAvatar(String username, final ViewHolder holder) {
-        String URL = "http://tiro-app.com/user/avatar/uri/" + username;
 
-        if (ApplicationController.getsInstance().getRequestQueue().getCache().get(URL) == null) {
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/" + response.getString("profilPicUri"), ApplicationController.getsInstance().getImageLoader());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
-            ApplicationController.getsInstance().addToRequestQueue(req, "GetAvatar");
-        }else{
-            Cache.Entry entry = ApplicationController.getsInstance().getRequestQueue().getCache().get(URL);
-            try {
-                JSONObject cachedData = new JSONObject(new String(entry.data, "UTF-8"));
-                if(cachedData.getBoolean("success")){
-                    holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/" +cachedData.getString("profilPicUri") , ApplicationController.getsInstance().getImageLoader());
-                }
-
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 
 
 }

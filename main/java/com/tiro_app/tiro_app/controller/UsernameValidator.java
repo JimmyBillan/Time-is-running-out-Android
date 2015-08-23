@@ -10,7 +10,7 @@ public class UsernameValidator {
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String USERNAME_PATTERN = "^[a-z0-9_-]{4,15}$";
+    private static final String USERNAME_PATTERN = "^[a-z0-9_-]{4,30}$";
 
     public UsernameValidator(){
         pattern = Pattern.compile(USERNAME_PATTERN);

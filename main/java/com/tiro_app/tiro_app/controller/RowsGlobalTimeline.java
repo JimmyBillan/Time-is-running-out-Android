@@ -12,4 +12,5 @@ public class RowsGlobalTimeline {
     public int dateNow ;
     public boolean imAdder;
     public String avatarUri;
+    public String photoUri;
 }

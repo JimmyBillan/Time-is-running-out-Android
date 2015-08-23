@@ -79,7 +79,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="right|bottom"
                 android:paddingRight="16dp"
-                android:text="Settings"
+                android:text="Log out"
                 android:layout_alignBaseline="@+id/f_profil_textview_upload_profil_pics"
                 android:layout_alignBottom="@+id/f_profil_textview_upload_profil_pics"
                 android:layout_alignParentRight="true"

@@ -59,8 +59,11 @@ public class LogIn_A extends AppCompatActivity {
         error_mail = (TextView) findViewById(R.id.error_mail);
         error_password = (TextView) findViewById(R.id.error_password);
 
-        mail.setText("tirodev_ada0@example.com");
-        password.setText("12345678");
+       /* mail.setText("tirodev_ada0@example.com");
+        password.setText("12345678");*/
+
+        /* mail.setText("billan.jimmy@gmail.com");
+        password.setText("12345678");*/
 
 
         //case user sign in the app, transfert his mail and password to login activity  and set editext text
@@ -70,8 +73,7 @@ public class LogIn_A extends AppCompatActivity {
             password.setText(bundle.getString("EXTRA_PASSWORD"));
         }
 
-        mail.setText("billan.jimmy@gmail.com");
-        password.setText("12345678");
+
         TextView signIn = (TextView) findViewById(R.id.go_to_signin);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override

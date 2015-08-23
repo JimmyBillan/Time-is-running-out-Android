@@ -14,7 +14,7 @@
 
     <string name="signIn_error_username_used">Username already use</string>
     <string name="signIn_error_username_tooShort">(length [4 ... 15])</string>
-    <string name="signIn_error_username_notValid">Only :aZ,0-9,\'_\',\'-\'</string>
+    <string name="signIn_error_username_notValid">Only :az,0-9,\'_\',\'-\'</string>
 
     <string name="signIn_error_password_short">(length min : 8)</string>
     <string name="signIn_TextView_Age">Minimum age : 13 </string>

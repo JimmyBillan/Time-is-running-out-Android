@@ -91,7 +91,6 @@
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/Cptl_rlt_layout_data"
-            android:layout_below="@id/Cptl_rltl_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -101,30 +100,30 @@
                 android:textSize="@dimen/abc_text_size_title_material"
                 android:paddingTop="8dp"
                 android:textColor="@android:color/black"
-                android:text="text text Le messageLe message text Le messageLe message text Le messageLe message text Le messageLe message text Le message" />
+                android:text="Le message text Le message" />
 
             <Button
                 android:id="@+id/Cptl_btn_add_comment"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_communication_comment_deep_purp"
                 android:text="Comment"
+
                 android:textStyle="bold"
-                android:textColor="@color/blueActionBar"
-                android:alpha="0.70"
-                android:layout_marginLeft="-5dp"
+                android:layout_marginLeft="-10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/GreenAccentColor"
                 android:layout_below="@+id/Cptl_nImageView_photo" />
 
             <com.android.volley.toolbox.NetworkImageView
+                android:paddingTop="8dp"
                 android:id="@+id/Cptl_nImageView_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:layout_below="@+id/Cptl_textview_rawData"
-
-
                 android:src="@drawable/ic_account_circle_white_48dp" />
 
         </RelativeLayout>

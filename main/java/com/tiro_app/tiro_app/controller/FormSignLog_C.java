@@ -39,6 +39,7 @@ public class FormSignLog_C {
     public void checkUsername(String username, TextView error){
 
         int usernameLength = username.length();
+        username = username.toLowerCase();
 
 
         if(usernameLength > 3 & usernameLength < 30){

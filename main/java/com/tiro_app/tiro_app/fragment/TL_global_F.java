@@ -186,6 +186,10 @@ public class TL_global_F extends Fragment implements AdapterGlobalTimeline.AgtIn
                 if(arr.getJSONObject(i).has("avatarUri")){
                     current.avatarUri = arr.getJSONObject(i).getString("avatarUri");
                 }
+
+                if(arr.getJSONObject(i).has("photoData")){
+                    current.photoUri = arr.getJSONObject(i).getString("photoData");
+                }
                 data.add(current);
             }
             pref.edit().putInt("dateNow", Integer.parseInt(response.getString("dateNow")) ).commit();

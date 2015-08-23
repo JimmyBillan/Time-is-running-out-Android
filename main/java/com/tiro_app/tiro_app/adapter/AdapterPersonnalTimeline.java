@@ -67,47 +67,45 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.dataView= data.get(position);
+
         if(aptInterface != null){
+            holder.dataView= data.get(position);
             Integer timer =  holder.dataView.timer - aptInterface.getCurrentHorlog();
+            holder.tv_username.setText(holder.dataView.username);
+            holder.dataPositionItem = position;
+            holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
+            holder.tv_timer.setText(HorlogeVIEW.convertSecondeToReadable(timer));
             this.position = position;
 
-            if(timer > 1){
+            if(timer > 1) {
                 holder.rlt_layout_hide.setVisibility(View.GONE);
                 holder.Cptl_rlt_layout_data.setVisibility(View.VISIBLE);
 
-                holder.tv_username.setText(holder.dataView.username);
-                holder.dataPositionItem = position;
-                holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
-                holder.tv_timer.setText(HorlogeVIEW.convertSecondeToReadable(timer));
-
-                if(timer < 60){
-                    Log.i("timer", timer+"");
-                    holder.tv_timer.setTextColor(context.getResources().getColor(R.color.error_color));
-                }else{
-                    holder.tv_timer.setTextColor(context.getResources().getColor(R.color.bluePolice));
-                }
-               //QuerysetAvatar(holder.dataView.username, holder);
-
-                if(holder.dataView.avatarUri !=null){
-                    Log.i("timer", holder.dataView.avatarUri+"");
-                    holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/"+holder.dataView.avatarUri,ApplicationController.getsInstance().getImageLoader());
-                }else{
-                    Log.i("timer", "pas d avatar");
-                    holder.avatar.setDefaultImageResId(R.drawable.ic_image_camera_blueaction_no_picture);
-                }
-
-                if(holder.dataView.photoUri !=null){
-                    holder.Cptl_nImageView_photo.setVisibility(View.VISIBLE);
-                    holder.Cptl_nImageView_photo.setImageUrl("http://tiro-app.com/post/photo/" + holder.dataView.photoUri, ApplicationController.getsInstance().getImageLoader());
-                }else{
-                    holder.Cptl_nImageView_photo.setVisibility(View.GONE);
-                }
-
-            }else{
+            }else {
                 holder.rlt_layout_hide.setVisibility(View.VISIBLE);
                 holder.Cptl_rlt_layout_data.setVisibility(View.GONE);
+
             }
+
+            if(timer < 60){
+                holder.tv_timer.setTextColor(context.getResources().getColor(R.color.error_color));
+            }else{
+                holder.tv_timer.setTextColor(context.getResources().getColor(R.color.bluePolice));
+            }
+
+            if(holder.dataView.avatarUri !=null){
+                holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/"+holder.dataView.avatarUri,ApplicationController.getsInstance().getImageLoader());
+            }else{
+                holder.avatar.setDefaultImageResId(R.drawable.ic_image_camera_blueaction_no_picture);
+            }
+
+            if(holder.dataView.photoUri !=null){
+                holder.Cptl_nImageView_photo.setVisibility(View.VISIBLE);
+                holder.Cptl_nImageView_photo.setImageUrl("http://tiro-app.com/post/photo/" + holder.dataView.photoUri, ApplicationController.getsInstance().getImageLoader());
+            }else{
+                holder.Cptl_nImageView_photo.setVisibility(View.GONE);
+            }
+
         }
     }
 

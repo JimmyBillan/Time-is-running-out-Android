@@ -16,6 +16,8 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +50,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -139,6 +142,8 @@ public class Edit_post_A extends AppCompatActivity{
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             rawData = bundle.getString("EXTRA_POST_RAW_DATA");
+            Spanned messageHtml = Html.fromHtml(rawData);
+            rawData = messageHtml+"";
             postMethode = reqModify;
             id_Post = bundle.getString("EXTRA_POST_ID");
             positionItem = bundle.getInt("EXTRA_POST_POSITION");
@@ -147,7 +152,6 @@ public class Edit_post_A extends AppCompatActivity{
             timerTotal_int = bundle.getInt("EXTRA_POST_TOTAL_TIMER_INT");
             timerTotal_string = bundle.getString("EXTRA_POST_TOTAL_TIMER_String");
         }else{
-
             postMethode = reqCreate;
             timerTotal_string = pref.getString("timerTotal_String","00h00");
             timerTotal_int = pref.getInt("timerTotal_int_minutes", 0);
@@ -316,7 +320,6 @@ public class Edit_post_A extends AppCompatActivity{
         if(postMethode.equals(reqModify)){
             params.put("id", id_Post);
         }else{
-            Log.i("on creer","j"+rawData);
             params.put("timer", Integer.toString(timerD + timerH + timerM));
         }
 
@@ -410,11 +413,11 @@ public class Edit_post_A extends AppCompatActivity{
     }
 
     private void postValidator(){
-        rawData = tV_RawData.getText().toString();
-        if(rawData.length() == 0 && !canUploadPhoto){ // CONDITION POSITION FUTUR
+        rawData = tV_RawData.getText().toString().trim();
+        if(rawData.length() == 0 && !canUploadPhoto && !postMethode.equals(reqModify)){ // CONDITION POSITION FUTUR
             Toast toast = Toast.makeText(getApplicationContext(), R.string.A_Edit_Post_Toast_Raw_Data_Empty, Toast.LENGTH_LONG);
             toast.show();
-        }else if((timerD + timerH + timerM) < 1){
+        }else if((timerD + timerH + timerM) < 1 && !postMethode.equals(reqModify)){
             seek_conteneur.setVisibility(View.VISIBLE);
             //((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(Edit_post_A.this.getCurrentFocus().getWindowToken(), 0);
             hideSoftKeyboard();
@@ -430,7 +433,6 @@ public class Edit_post_A extends AppCompatActivity{
             Toast.makeText(getApplicationContext(), "Uploading ", Toast.LENGTH_SHORT).show();
             finish();
         }else{
-            Log.i("rawData",rawData);
             queryPost();
         }
     }
@@ -528,9 +530,7 @@ public class Edit_post_A extends AppCompatActivity{
     }
 
     private void rotateBitmap(int orientation){
-        Log.i("rotation avant", orientation+"");
         orientation = getRotate(orientation);
-        Log.i("rotation", orientation+"");
         Matrix matrix = new Matrix();
         matrix.postRotate(orientation);
         bitmapDisplay = Bitmap.createBitmap(bitmapDisplay, 0,0,bitmapDisplay.getWidth(),bitmapDisplay.getHeight(),matrix,true);
@@ -607,7 +607,6 @@ public class Edit_post_A extends AppCompatActivity{
             dos = new DataOutputStream(conn.getOutputStream());
 
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            Log.i("filename edit", fileName);
             dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + fileName + "\"" + lineEnd);
             dos.writeBytes(lineEnd);
 
@@ -641,8 +640,7 @@ public class Edit_post_A extends AppCompatActivity{
 
             dos.writeBytes("Content-Disposition: form-data; name=\"rawData\"" + lineEnd);
             dos.writeBytes(lineEnd);
-            Log.i("rawdata", rawData);
-            dos.writeBytes(rawData);
+            dos.writeBytes(URLEncoder.encode(rawData, "UTF-8"));
             dos.writeBytes(lineEnd);
            dos.writeBytes(twoHyphens + boundary + lineEnd);
 
@@ -663,7 +661,6 @@ public class Edit_post_A extends AppCompatActivity{
                     sb.append(line+"\n");
                 }
                 br.close();
-                Log.i("json retour", sb.toString());
                 this.runOnUiThread(new Runnable() {
                     public void run() {
 
