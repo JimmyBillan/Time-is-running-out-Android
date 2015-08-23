@@ -64,15 +64,6 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
     protected RecyclerView.LayoutManager mLayoutManager;
     protected View view;
 
-    public int getHorloge(){
-        return this.horloge;
-    }
-
-    public void setmainHorloge(int horloge){
-        this.horloge = horloge;
-        Log.i("tl_perso", horloge + "");
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,16 +96,6 @@ public class TL_personnal_F extends Fragment implements AdapterPersonnalTimeline
 
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-       
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
-            public void onScrollStateChanged (RecyclerView recyclerView, int newState){
-               if(newState== 0){
-                   LinearLayoutManager lm = ((LinearLayoutManager) mRecyclerView.getLayoutManager());
-
-               }
-            }
-        });
-
 
         requestData();
         if(dataset.size() != 0){

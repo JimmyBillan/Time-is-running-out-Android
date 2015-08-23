@@ -73,6 +73,9 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
             this.position = position;
 
             if(timer > 1){
+                holder.rlt_layout_hide.setVisibility(View.GONE);
+                holder.Cptl_rlt_layout_data.setVisibility(View.VISIBLE);
+
                 holder.tv_username.setText(holder.dataView.username);
                 holder.dataPositionItem = position;
                 holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
@@ -87,8 +90,10 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
                //QuerysetAvatar(holder.dataView.username, holder);
 
                 if(holder.dataView.avatarUri !=null){
+                    Log.i("timer", holder.dataView.avatarUri+"");
                     holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/"+holder.dataView.avatarUri,ApplicationController.getsInstance().getImageLoader());
                 }else{
+                    Log.i("timer", "pas d avatar");
                     holder.avatar.setDefaultImageResId(R.drawable.ic_image_camera_blueaction_no_picture);
                 }
 
@@ -99,13 +104,12 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
                     holder.Cptl_nImageView_photo.setVisibility(View.GONE);
                 }
 
+            }else{
+                holder.rlt_layout_hide.setVisibility(View.VISIBLE);
+                holder.Cptl_rlt_layout_data.setVisibility(View.GONE);
             }
         }
     }
-
-
-
-
 
     public void setListenner(AptInterface clickListenner){
         this.aptInterface = clickListenner;
@@ -119,7 +123,7 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView rlt_layout_showing;
-        RelativeLayout rlt_layout_hide;
+        RelativeLayout rlt_layout_hide, Cptl_rlt_layout_data;
 
         TextView tv_username;
         TextView tv_rawData;
@@ -138,6 +142,7 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
             context = itemView.getContext();
             rlt_layout_showing  = (CardView) itemView.findViewById(R.id.Cptl_rlt_layout_showing);
             rlt_layout_hide = (RelativeLayout) itemView.findViewById(R.id.Cptl_rlt_layout_hide);
+            Cptl_rlt_layout_data = (RelativeLayout) itemView.findViewById(R.id.Cptl_rlt_layout_data);
             tv_username = (TextView) itemView.findViewById(R.id.Cptl_textview_username);
             tv_rawData = (TextView) itemView.findViewById(R.id.Cptl_textview_rawData);
             tv_timer = (TextView) itemView.findViewById(R.id.Cptl_textview_timeLeft);
@@ -178,42 +183,5 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
     }
 
 
-
-     /* private void QuerysetAvatar(String username, final ViewHolder holder){
-        String URL = "http://tiro-app.com/user/avatar/uri/"+username;
-
-        if(ApplicationController.getsInstance().getRequestQueue().getCache().get(URL) == null){
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,
-                    new Response.Listener<JSONObject>(){
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/"+response.getString("profilPicUri"),ApplicationController.getsInstance().getImageLoader());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener(){
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
-            ApplicationController.getsInstance().addToRequestQueue(req, "GetAvatar");
-        }else{
-            Cache.Entry entry = ApplicationController.getsInstance().getRequestQueue().getCache().get(URL);
-            try {
-                JSONObject cachedData = new JSONObject(new String(entry.data, "UTF-8"));
-                if(cachedData.getBoolean("success")){
-                    holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/" +cachedData.getString("profilPicUri") , ApplicationController.getsInstance().getImageLoader());
-                }
-
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }*/
 
 }
