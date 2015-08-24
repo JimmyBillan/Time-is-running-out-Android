@@ -88,7 +88,6 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
                 holder.tv_rawData.setVisibility(View.VISIBLE);
             }else{
                 holder.tv_rawData.setVisibility(View.GONE);
-                Log.i("tv rawdata", "GONE");
             }
 
 
@@ -96,7 +95,10 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
             if(holder.dataView.avatarUri !=null){
                 holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/" + holder.dataView.avatarUri, ApplicationController.getsInstance().getImageLoader());
             }else{
+                Log.i("uri", holder.dataView.avatarUri+"@");
                 holder.avatar.setDefaultImageResId(R.drawable.ic_image_camera_blueaction_no_picture);
+                holder.avatar.setImageUrl(null, ApplicationController.getsInstance().getImageLoader());
+
             }
 
             if(holder.dataView.photoUri !=null){

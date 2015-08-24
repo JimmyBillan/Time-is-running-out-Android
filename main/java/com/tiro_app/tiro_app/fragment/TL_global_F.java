@@ -54,7 +54,7 @@ public class TL_global_F extends Fragment implements AdapterGlobalTimeline.AgtIn
     protected View view;
     SwipeRefreshLayout mySwiper;
 
-    protected RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
 
     public AdapterGlobalTimeline mAdapter;

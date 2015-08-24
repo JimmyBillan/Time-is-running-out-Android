@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -111,6 +112,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         }
     };
 
+    public void closeService(){
+        this.stopService(new Intent(this, HorlogeService.class));
+        this.unbindService(serviceConnection);
+        this.finish();
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         actionBar = getSupportActionBar();
@@ -119,10 +126,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
 
        startService(new Intent(this, HorlogeService.class));
-
-
-
-
 
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
         getSupportFragmentManager().popBackStack();

@@ -50,6 +50,7 @@ import java.util.Map;
 
 import com.tiro_app.tiro_app.ApplicationController;
 import com.tiro_app.tiro_app.HorlogeService;
+import com.tiro_app.tiro_app.MainActivity;
 import com.tiro_app.tiro_app.R;
 import com.tiro_app.tiro_app.activity.List_follow;
 import com.tiro_app.tiro_app.activity.LogIn_A;
@@ -116,9 +117,8 @@ public class Profil_F extends Fragment implements DialogClickListenerImagePicker
         btn_disconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().stopService(new Intent(getActivity(), HorlogeService.class));
                 getActivity().getSharedPreferences("application_credentials", 0).edit().clear().commit();
-                getActivity().finish();
+                ((MainActivity)getActivity()).closeService();
             }
         });
 
