@@ -3,11 +3,13 @@ package com.tiro_app.tiro_app.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -67,8 +69,7 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
                 holder.tv_timer.setText("DEAD !");
             }else{
                 holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
-                holder.tv_rawData.setVisibility(View.VISIBLE);
-
+                holder.Cgtl_RelativeLayout_rawData.setVisibility(View.VISIBLE);
                 if(timer < 60){
                     holder.tv_timer.setTextColor(context.getResources().getColor(R.color.error_color));
                 }else{
@@ -80,6 +81,14 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
                 viewButtonPlus_1h_View(holder.tiroplus_1h, 7, true);
             }else{
                 viewButtonPlus_1h_View(holder.tiroplus_1h, 0, false);
+            }
+
+            if(holder.dataView.rawData.length() > 0 ){
+                holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
+                holder.tv_rawData.setVisibility(View.VISIBLE);
+            }else{
+                holder.tv_rawData.setVisibility(View.GONE);
+                Log.i("tv rawdata", "GONE");
             }
 
 
@@ -125,7 +134,7 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
         TextView tv_timer;
         NetworkImageView avatar, ImageView_photo;
         Button tiroplus_1h;
-        LinearLayout Cgtl_RelativeLayout_rawData;
+        RelativeLayout Cgtl_RelativeLayout_rawData;
         RowsGlobalTimeline dataView;
 
 
@@ -143,7 +152,7 @@ public class AdapterGlobalTimeline  extends RecyclerView.Adapter<AdapterGlobalTi
             ImageView_photo = (NetworkImageView) itemView.findViewById(R.id.Cgtl_nImageView_photo);
             tiroplus_1h = (Button) itemView.findViewById(R.id.Cgtl_btn_tiroplus_1h);
             Cgtl_btn_add_comment = (Button) itemView.findViewById(R.id.Cgtl_btn_add_comment);
-            Cgtl_RelativeLayout_rawData = (LinearLayout) itemView.findViewById(R.id.Cgtl_RelativeLayout_rawData);
+            Cgtl_RelativeLayout_rawData = (RelativeLayout) itemView.findViewById(R.id.Cgtl_RelativeLayout_rawData);
 
 
             tiroplus_1h.setOnClickListener(new View.OnClickListener() {

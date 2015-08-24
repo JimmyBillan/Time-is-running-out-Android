@@ -2,13 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="1dp"
-    android:background="@color/textWhiteActionBar"
+    android:background="@color/bluebackgroundLight"
     android:minHeight="72dp"
-
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     android:id="@+id/Cptl_rlt_layout"
     android:paddingTop="8dp">
 
@@ -16,14 +14,15 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/textWhiteActionBar"
         android:id="@+id/Cptl_rlt_layout_showing"
 
         >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:background="@color/textWhiteActionBar"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:orientation="vertical" >
 
 
@@ -31,6 +30,8 @@
             android:id="@+id/Cptl_rltl_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:orientation="horizontal"
             >
             <com.android.volley.toolbox.NetworkImageView
@@ -43,8 +44,6 @@
                 android:adjustViewBounds="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-
-
                 android:src="@drawable/ic_account_circle_white_48dp" />
 
             <LinearLayout
@@ -92,14 +91,30 @@
         <RelativeLayout
             android:id="@+id/Cptl_rlt_layout_data"
             android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
             android:layout_height="wrap_content">
+
+            <com.android.volley.toolbox.NetworkImageView
+
+                android:id="@+id/Cptl_nImageView_photo"
+                android:maxHeight="250dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_account_circle_white_48dp" />
+
             <TextView
                 android:id="@+id/Cptl_textview_rawData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:paddingTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:textSize="16sp"
                 android:textColor="@android:color/black"
+                android:layout_below="@+id/Cptl_nImageView_photo"
                 android:text="Le message text Le message" />
 
             <Button
@@ -108,23 +123,15 @@
                 android:layout_height="36dp"
                 android:background="@android:color/transparent"
                 android:text="Comment"
-
-                android:textStyle="bold"
-                android:layout_marginLeft="-10dp"
+                android:textSize="14dp"
+                android:paddingLeft="6dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:paddingRight="8dp"
+                android:textStyle="bold"
                 android:textColor="@color/GreenAccentColor"
-                android:layout_below="@+id/Cptl_nImageView_photo" />
+                android:layout_below="@+id/Cptl_textview_rawData" />
 
-            <com.android.volley.toolbox.NetworkImageView
-                android:paddingTop="8dp"
-                android:id="@+id/Cptl_nImageView_photo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:layout_below="@+id/Cptl_textview_rawData"
-                android:src="@drawable/ic_account_circle_white_48dp" />
+
 
         </RelativeLayout>
         <RelativeLayout

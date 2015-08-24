@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -73,7 +74,6 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
             Integer timer =  holder.dataView.timer - aptInterface.getCurrentHorlog();
             holder.tv_username.setText(holder.dataView.username);
             holder.dataPositionItem = position;
-            holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
             holder.tv_timer.setText(HorlogeVIEW.convertSecondeToReadable(timer));
             this.position = position;
 
@@ -87,6 +87,14 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
 
             }
 
+            if(holder.dataView.rawData.length() > 0 ){
+                holder.tv_rawData.setText(Html.fromHtml(holder.dataView.rawData));
+                holder.tv_rawData.setVisibility(View.VISIBLE);
+            }else{
+                holder.tv_rawData.setVisibility(View.GONE);
+                Log.i("tv rawdata", "GONE");
+            }
+
             if(timer < 60){
                 holder.tv_timer.setTextColor(context.getResources().getColor(R.color.error_color));
             }else{
@@ -94,7 +102,7 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
             }
 
             if(holder.dataView.avatarUri !=null){
-                holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/"+holder.dataView.avatarUri,ApplicationController.getsInstance().getImageLoader());
+                holder.avatar.setImageUrl("http://tiro-app.com/user/avatar/" + holder.dataView.avatarUri, ApplicationController.getsInstance().getImageLoader());
             }else{
                 holder.avatar.setDefaultImageResId(R.drawable.ic_image_camera_blueaction_no_picture);
             }
@@ -121,7 +129,8 @@ public class AdapterPersonnalTimeline extends RecyclerView.Adapter<AdapterPerson
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView rlt_layout_showing;
-        RelativeLayout rlt_layout_hide, Cptl_rlt_layout_data;
+        RelativeLayout rlt_layout_hide;
+        RelativeLayout Cptl_rlt_layout_data;
 
         TextView tv_username;
         TextView tv_rawData;

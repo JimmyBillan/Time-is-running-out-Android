@@ -43,7 +43,7 @@
     <color name="blueActionBar">#673AB7</color>
     <color name="bluePolice">#7E57C2</color>
     <color name="blue_textview">#512DA8</color>
-    <color name="bluebackgroundLight">#EDE7F6</color>
+    <color name="bluebackgroundLight">#E0E0E0</color>
     <color name="textWhiteActionBar">#FFFFFF</color>
     <color name="error_red">#DD2C00</color>
     
